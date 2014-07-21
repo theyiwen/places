@@ -1,0 +1,229 @@
+//
+//  YJZPlacesViewController.m
+//  Places
+//
+//  Created by Yiwen Zhan on 7/19/14.
+//  Copyright (c) 2014 Yiwen Zhan. All rights reserved.
+//
+
+#import "YJZPlacesViewController.h"
+#import "YJZPlaceStore.h"
+#import "YJZPlace.h"
+#import "YJZDetailViewController.h"
+
+@interface YJZPlacesViewController ()
+
+@property (strong, nonatomic) IBOutlet UIView *sectionView;
+
+@property (nonatomic) NSArray *ratingColors;
+@property (nonatomic) NSMutableArray *collapsedSections;
+
+@end
+
+@implementation YJZPlacesViewController
+
+- (instancetype)init
+{
+    self = [super initWithStyle:UITableViewStylePlain];
+    if (self) {
+        _ratingColors = @[[UIColor colorWithRed:69/255.0 green:178/255.0 blue:157/255.0 alpha:1.0],
+                          [UIColor colorWithRed:223/255.0 green:90/255.0 blue:73/255.0 alpha:1.0],
+                          [UIColor colorWithRed:226/255.0 green:122/255.0 blue:63/255.0 alpha:1.0],
+                          [UIColor colorWithRed:239/255.0 green:201/255.0 blue:76/255.0 alpha:1.0]];
+        
+        _accentColor = [UIColor colorWithRed:250/255.0 green:128/255.0 blue:114/255.0 alpha:1.0];
+        
+        _collapsedSections = [[NSMutableArray alloc] initWithArray:@[@0,@0,@0,@0]];
+        
+        self.tableView.rowHeight = (CGFloat)50;
+        self.tableView.sectionHeaderHeight = (CGFloat)50;
+        self.tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
+        self.navigationItem.title = @"places";
+//        UIBarButtonItem *bbi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewItem:)];
+//        self.navigationItem.rightBarButtonItem = bbi;
+//        UIBarButtonItem *ebbi =[[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(toggleEditingMode:)];
+//        self.navigationItem.leftBarButtonItem = ebbi;
+    }
+    return self;
+}
+
+- (instancetype)initWithStyle:(UITableViewStyle)style
+{
+    return [self init];
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (self.collapsedSections[section] == @0)
+        return [[[YJZPlaceStore sharedStore] places][section] count];
+    else
+        return 0;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UITableViewCell" forIndexPath:indexPath];
+    YJZPlace *place = [[YJZPlaceStore sharedStore] places][indexPath.section][indexPath.row];
+    cell.textLabel.text = place.name;
+    return cell;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return [[[YJZPlaceStore sharedStore] places] count];
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    NSArray *titles = @[@"try",@"love",@"like",@"okay"];
+    return titles[section];
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"UITableViewCell"];
+
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.tableView reloadData];
+//    self.navigationController.navigationBarHidden = YES;
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    self.navigationController.navigationBarHidden = NO;
+//    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+
+}
+
+- (IBAction)addRandomNewItem:(id)sender
+{
+    YJZPlace *newPlace = [YJZPlace randomPlace];
+    [[YJZPlaceStore sharedStore] addPlace:newPlace];
+    NSInteger lastRow = [[[YJZPlaceStore sharedStore] places][newPlace.rating] indexOfObject:newPlace];
+    NSIndexPath *iP = [NSIndexPath indexPathForRow:lastRow inSection:newPlace.rating];
+    [self.tableView insertRowsAtIndexPaths:@[iP] withRowAnimation:UITableViewRowAnimationTop];
+}
+
+- (IBAction)addNewItem:(id)sender
+{
+    int i = [((UIView*)sender).superview tag];
+    YJZPlace *newPlace = [[YJZPlace alloc]initWithName:nil notes:nil rating:i tags:nil];
+    [[YJZPlaceStore sharedStore] addPlace:newPlace];
+    YJZDetailViewController *dvc = [[YJZDetailViewController alloc] initWithPlace:newPlace];
+    [self.navigationController pushViewController:dvc animated:YES];
+}
+
+- (IBAction)toggleEditingMode:(id)sender
+{
+    if (self.isEditing) {
+        [self.navigationItem.leftBarButtonItem setTitle:@"Edit"];
+        [self setEditing:NO animated:YES];
+    } else {
+        [self.navigationItem.leftBarButtonItem setTitle:@"Done"];
+        [self setEditing:YES animated:YES];
+    }
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        YJZPlace *selectedPlace = [[YJZPlaceStore sharedStore] places][indexPath.section][indexPath.row];
+        [[YJZPlaceStore sharedStore] removePlace:selectedPlace];
+        [tableView deleteRowsAtIndexPaths:@[indexPath]
+                         withRowAnimation:UITableViewRowAnimationFade];
+    }
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return @"X";
+}
+
+
+-(NSArray*) indexPathsForSection:(int)section withNumberOfRows:(int)numberOfRows forwards:(BOOL)forward {
+    NSMutableArray* indexPaths = [NSMutableArray new];
+    for (int i = 0; i < numberOfRows; i++) {
+        int ip;
+        if (forward)
+            ip = i;
+        else
+            ip = numberOfRows-1-i;
+        NSIndexPath* indexPath = [NSIndexPath indexPathForRow:ip inSection:section];
+        [indexPaths addObject:indexPath];
+    }
+    return indexPaths;
+}
+- (IBAction)collapseButtonTouched:(id)sender {
+    [self sectionButtonTouchUpInside:sender];
+}
+
+-(void)sectionButtonTouchUpInside:(UIButton*)sender {
+    [self.tableView beginUpdates];
+    int section = [sender.superview tag];
+    //collapsing
+    if (self.collapsedSections[section] == @0) {
+        int numOfRows = [self tableView:self.tableView numberOfRowsInSection:section];
+        NSArray* indexPaths = [self indexPathsForSection:section withNumberOfRows:numOfRows forwards:NO];
+        [self.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
+        self.collapsedSections[section] = @1;
+    }
+    //expanding
+    else {
+        self.collapsedSections[section] = @0;
+        int numOfRows = [self tableView:self.tableView numberOfRowsInSection:section];
+        NSArray* indexPaths = [self indexPathsForSection:section withNumberOfRows:numOfRows forwards:YES];
+        [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
+    }
+    [self.tableView endUpdates];
+    //[_tableView reloadData];
+}
+
+//Q: ok to do initWithPlace?
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    YJZPlace *selectedPlace = [[YJZPlaceStore sharedStore] places][indexPath.section][indexPath.row];
+    YJZDetailViewController *dvc = [[YJZDetailViewController alloc] initWithPlace:selectedPlace];
+//    dvc.place = selectedPlace;
+    [self.navigationController pushViewController:dvc animated:YES];
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    
+    UIView *view = [[NSBundle mainBundle] loadNibNamed:@"SectionView" owner:self options:nil][0];
+    UILabel *labelTitle =(UILabel*)[view viewWithTag:101];
+    labelTitle.text =[@[@"try",@"love",@"like",@"okay"] objectAtIndex:section];
+    view.backgroundColor = self.ratingColors[section];
+    [view setTag:section];
+    return view;
+    
+//    // 1. The view for the header
+//    UIView* headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 50)];
+//    
+//    // 2. Set a custom background color and a border
+//    headerView.backgroundColor = self.accentColor;
+////    headerView.layer.borderColor = [UIColor colorWithWhite:0.5 alpha:1.0].CGColor;
+////    headerView.layer.borderWidth = 1.0;
+//    
+//    // 3. Add a label
+//    UILabel* headerLabel = [[UILabel alloc] init];
+//    headerLabel.frame = CGRectMake(10, 2, tableView.frame.size.width - 10, 46);
+//    headerLabel.backgroundColor = [UIColor clearColor];
+//    headerLabel.textColor = [UIColor whiteColor];
+//    headerLabel.font = [UIFont boldSystemFontOfSize:24.0];
+//    headerLabel.text = [@[@"try",@"love",@"like",@"okay"] objectAtIndex:section];
+//    headerLabel.textAlignment = NSTextAlignmentLeft;
+//    
+//    // 4. Add the label to the header view
+//    [headerView addSubview:headerLabel];
+//    
+//    // 5. Finally return
+//    return headerView;
+}
+@end

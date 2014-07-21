@@ -7,6 +7,9 @@
 //
 
 #import "YJZAppDelegate.h"
+#import "YJZPlace.h"
+#import "YJZPlacesViewController.h"
+#import "YJZPlaceStore.h"
 
 @implementation YJZAppDelegate
 
@@ -14,7 +17,18 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
+    
+    YJZPlacesViewController *pvc = [[YJZPlacesViewController alloc] init];
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:pvc];
+    self.window.rootViewController = navController;
     self.window.backgroundColor = [UIColor whiteColor];
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:51/255.0 green:77/255.0 blue:92/255.0 alpha:1.0]];
+    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -100.f) forBarMetrics:UIBarMetricsDefault];
+    [[UINavigationBar appearance] setTitleTextAttributes:
+     [NSDictionary dictionaryWithObjectsAndKeys:
+      [UIColor whiteColor], NSForegroundColorAttributeName,
+      [UIFont fontWithName:@"HelveticaNeue-Bold" size:20.0], NSFontAttributeName,nil]];
     [self.window makeKeyAndVisible];
     return YES;
 }
@@ -29,6 +43,12 @@
 {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    BOOL success = [[YJZPlaceStore sharedStore] saveChanges];
+//    if (success) {
+//        NSLog(@"saved all of the places");
+//    } else {
+//        NSLog(@"couldn't save any of the items");
+//    }
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application

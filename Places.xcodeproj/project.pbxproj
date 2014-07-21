@@ -19,6 +19,12 @@
 		93A86AC9197B16060015F16F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93A86AB1197B16060015F16F /* UIKit.framework */; };
 		93A86AD1197B16060015F16F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 93A86ACF197B16060015F16F /* InfoPlist.strings */; };
 		93A86AD3197B16060015F16F /* PlacesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A86AD2197B16060015F16F /* PlacesTests.m */; };
+		93A86ADE197B16300015F16F /* YJZPlace.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A86ADD197B16300015F16F /* YJZPlace.m */; };
+		93A86AE1197B2C080015F16F /* YJZPlaceStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A86AE0197B2C080015F16F /* YJZPlaceStore.m */; };
+		93A86AE4197B3B1E0015F16F /* YJZPlacesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A86AE3197B3B1E0015F16F /* YJZPlacesViewController.m */; };
+		93A86AED197B64340015F16F /* YJZDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A86AEB197B64340015F16F /* YJZDetailViewController.m */; };
+		93A86AEE197B64340015F16F /* YJZDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93A86AEC197B64340015F16F /* YJZDetailViewController.xib */; };
+		93D96827197CC95500D9D04D /* SectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93D96826197CC95500D9D04D /* SectionView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +54,16 @@
 		93A86ACE197B16060015F16F /* PlacesTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PlacesTests-Info.plist"; sourceTree = "<group>"; };
 		93A86AD0197B16060015F16F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		93A86AD2197B16060015F16F /* PlacesTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlacesTests.m; sourceTree = "<group>"; };
+		93A86ADC197B16300015F16F /* YJZPlace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJZPlace.h; sourceTree = "<group>"; };
+		93A86ADD197B16300015F16F /* YJZPlace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJZPlace.m; sourceTree = "<group>"; };
+		93A86ADF197B2C080015F16F /* YJZPlaceStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJZPlaceStore.h; sourceTree = "<group>"; };
+		93A86AE0197B2C080015F16F /* YJZPlaceStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJZPlaceStore.m; sourceTree = "<group>"; };
+		93A86AE2197B3B1E0015F16F /* YJZPlacesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJZPlacesViewController.h; sourceTree = "<group>"; };
+		93A86AE3197B3B1E0015F16F /* YJZPlacesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJZPlacesViewController.m; sourceTree = "<group>"; };
+		93A86AEA197B64340015F16F /* YJZDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJZDetailViewController.h; sourceTree = "<group>"; };
+		93A86AEB197B64340015F16F /* YJZDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJZDetailViewController.m; sourceTree = "<group>"; };
+		93A86AEC197B64340015F16F /* YJZDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YJZDetailViewController.xib; sourceTree = "<group>"; };
+		93D96826197CC95500D9D04D /* SectionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SectionView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +127,16 @@
 				93A86ABD197B16060015F16F /* YJZAppDelegate.m */,
 				93A86ABF197B16060015F16F /* Images.xcassets */,
 				93A86AB4197B16060015F16F /* Supporting Files */,
+				93A86ADC197B16300015F16F /* YJZPlace.h */,
+				93A86ADD197B16300015F16F /* YJZPlace.m */,
+				93A86ADF197B2C080015F16F /* YJZPlaceStore.h */,
+				93A86AE0197B2C080015F16F /* YJZPlaceStore.m */,
+				93A86AE2197B3B1E0015F16F /* YJZPlacesViewController.h */,
+				93A86AE3197B3B1E0015F16F /* YJZPlacesViewController.m */,
+				93D96826197CC95500D9D04D /* SectionView.xib */,
+				93A86AEA197B64340015F16F /* YJZDetailViewController.h */,
+				93A86AEB197B64340015F16F /* YJZDetailViewController.m */,
+				93A86AEC197B64340015F16F /* YJZDetailViewController.xib */,
 			);
 			path = Places;
 			sourceTree = "<group>";
@@ -220,8 +246,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93D96827197CC95500D9D04D /* SectionView.xib in Resources */,
 				93A86AB8197B16060015F16F /* InfoPlist.strings in Resources */,
 				93A86AC0197B16060015F16F /* Images.xcassets in Resources */,
+				93A86AEE197B64340015F16F /* YJZDetailViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -241,7 +269,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				93A86ABE197B16060015F16F /* YJZAppDelegate.m in Sources */,
+				93A86AE1197B2C080015F16F /* YJZPlaceStore.m in Sources */,
+				93A86AE4197B3B1E0015F16F /* YJZPlacesViewController.m in Sources */,
 				93A86ABA197B16060015F16F /* main.m in Sources */,
+				93A86ADE197B16300015F16F /* YJZPlace.m in Sources */,
+				93A86AED197B64340015F16F /* YJZDetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -438,6 +470,7 @@
 				93A86AD8197B16060015F16F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		93A86AD9197B16060015F16F /* Build configuration list for PBXNativeTarget "PlacesTests" */ = {
 			isa = XCConfigurationList;
@@ -446,6 +479,7 @@
 				93A86ADB197B16060015F16F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
