@@ -41,7 +41,7 @@
 
 - (NSString *)getTagsAsString
 {
-    int tagLen = [self.tags count];
+    int tagLen = (int)[self.tags count];
     if (tagLen == 0)
         return @"";
     else {
@@ -66,7 +66,7 @@
     
     NSArray *tags = @[@"brunch",@"ramen",@"healthy",@"dinner",@"snack"];
     NSInteger tagIndex = arc4random() % [tags count];
-    NSInteger rating = arc4random() % 4;
+    int rating = arc4random() % 4;
     NSMutableArray *newTags = [NSMutableArray arrayWithObject:tags[tagIndex]];
     
     return [[YJZPlace alloc] initWithName:names[namesIndex]

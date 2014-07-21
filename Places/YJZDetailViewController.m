@@ -160,7 +160,7 @@
     for (int i=0; i<[self.rateButtons count]; i++)
     {
         UIButton *button = self.rateButtons[i];
-        int currentRating = [self.rateDict[button.currentTitle] integerValue];
+        int currentRating = (int)[self.rateDict[button.currentTitle] integerValue];
         
         if (currentRating != selectedRating) {
             [button setTitleColor:[[UIColor lightGrayColor] colorWithAlphaComponent:0.7] forState:UIControlStateNormal];

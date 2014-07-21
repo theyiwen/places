@@ -54,7 +54,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (self.collapsedSections[section] == @0)
+    if ([self.collapsedSections[section]  isEqual: @0])
         return [[[YJZPlaceStore sharedStore] places][section] count];
     else
         return 0;
@@ -112,7 +112,7 @@
 
 - (IBAction)addNewItem:(id)sender
 {
-    int i = [((UIView*)sender).superview tag];
+    int i = (int)[((UIView*)sender).superview tag];
     YJZPlace *newPlace = [[YJZPlace alloc]initWithName:nil notes:nil rating:i tags:nil];
     [[YJZPlaceStore sharedStore] addPlace:newPlace];
     YJZDetailViewController *dvc = [[YJZDetailViewController alloc] initWithPlace:newPlace];
@@ -165,10 +165,10 @@
 
 -(void)sectionButtonTouchUpInside:(UIButton*)sender {
     [self.tableView beginUpdates];
-    int section = [sender.superview tag];
+    int section = (int)[sender.superview tag];
     //collapsing
-    if (self.collapsedSections[section] == @0) {
-        int numOfRows = [self tableView:self.tableView numberOfRowsInSection:section];
+    if ([self.collapsedSections[section]  isEqual: @0]) {
+        int numOfRows = (int)[self tableView:self.tableView numberOfRowsInSection:section];
         NSArray* indexPaths = [self indexPathsForSection:section withNumberOfRows:numOfRows forwards:NO];
         [self.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
         self.collapsedSections[section] = @1;
@@ -176,7 +176,7 @@
     //expanding
     else {
         self.collapsedSections[section] = @0;
-        int numOfRows = [self tableView:self.tableView numberOfRowsInSection:section];
+        int numOfRows = (int)[self tableView:self.tableView numberOfRowsInSection:section];
         NSArray* indexPaths = [self indexPathsForSection:section withNumberOfRows:numOfRows forwards:YES];
         [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
     }
