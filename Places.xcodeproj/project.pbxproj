@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		93A1BD57197F0B4D007DBC9E /* YJZConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A1BD56197F0B4D007DBC9E /* YJZConstants.m */; };
+		93A1BD5A197F140B007DBC9E /* YJZPlaceOpenTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A1BD59197F140B007DBC9E /* YJZPlaceOpenTransition.m */; };
 		93A86AAE197B16060015F16F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93A86AAD197B16060015F16F /* Foundation.framework */; };
 		93A86AB0197B16060015F16F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93A86AAF197B16060015F16F /* CoreGraphics.framework */; };
 		93A86AB2197B16060015F16F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93A86AB1197B16060015F16F /* UIKit.framework */; };
@@ -38,6 +40,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		93A1BD55197F0B4D007DBC9E /* YJZConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJZConstants.h; sourceTree = "<group>"; };
+		93A1BD56197F0B4D007DBC9E /* YJZConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJZConstants.m; sourceTree = "<group>"; };
+		93A1BD58197F140B007DBC9E /* YJZPlaceOpenTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJZPlaceOpenTransition.h; sourceTree = "<group>"; };
+		93A1BD59197F140B007DBC9E /* YJZPlaceOpenTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJZPlaceOpenTransition.m; sourceTree = "<group>"; };
 		93A86AAA197B16060015F16F /* Places.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Places.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		93A86AAD197B16060015F16F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		93A86AAF197B16060015F16F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -125,10 +131,10 @@
 			children = (
 				93A86ABC197B16060015F16F /* YJZAppDelegate.h */,
 				93A86ABD197B16060015F16F /* YJZAppDelegate.m */,
-				93A86ABF197B16060015F16F /* Images.xcassets */,
-				93A86AB4197B16060015F16F /* Supporting Files */,
 				93A86ADC197B16300015F16F /* YJZPlace.h */,
 				93A86ADD197B16300015F16F /* YJZPlace.m */,
+				93A1BD55197F0B4D007DBC9E /* YJZConstants.h */,
+				93A1BD56197F0B4D007DBC9E /* YJZConstants.m */,
 				93A86ADF197B2C080015F16F /* YJZPlaceStore.h */,
 				93A86AE0197B2C080015F16F /* YJZPlaceStore.m */,
 				93A86AE2197B3B1E0015F16F /* YJZPlacesViewController.h */,
@@ -137,6 +143,10 @@
 				93A86AEA197B64340015F16F /* YJZDetailViewController.h */,
 				93A86AEB197B64340015F16F /* YJZDetailViewController.m */,
 				93A86AEC197B64340015F16F /* YJZDetailViewController.xib */,
+				93A1BD58197F140B007DBC9E /* YJZPlaceOpenTransition.h */,
+				93A1BD59197F140B007DBC9E /* YJZPlaceOpenTransition.m */,
+				93A86ABF197B16060015F16F /* Images.xcassets */,
+				93A86AB4197B16060015F16F /* Supporting Files */,
 			);
 			path = Places;
 			sourceTree = "<group>";
@@ -270,10 +280,12 @@
 			files = (
 				93A86ABE197B16060015F16F /* YJZAppDelegate.m in Sources */,
 				93A86AE1197B2C080015F16F /* YJZPlaceStore.m in Sources */,
+				93A1BD5A197F140B007DBC9E /* YJZPlaceOpenTransition.m in Sources */,
 				93A86AE4197B3B1E0015F16F /* YJZPlacesViewController.m in Sources */,
 				93A86ABA197B16060015F16F /* main.m in Sources */,
 				93A86ADE197B16300015F16F /* YJZPlace.m in Sources */,
 				93A86AED197B64340015F16F /* YJZDetailViewController.m in Sources */,
+				93A1BD57197F0B4D007DBC9E /* YJZConstants.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

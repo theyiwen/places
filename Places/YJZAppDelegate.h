@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface YJZAppDelegate : UIResponder <UIApplicationDelegate>
+@interface YJZAppDelegate : UIResponder <UIApplicationDelegate, UINavigationControllerDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 

@@ -9,6 +9,7 @@
 #import "YJZDetailViewController.h"
 #import "YJZPlace.h"
 #import "YJZPlaceStore.h"
+#import "YJZConstants.h"
 
 @interface YJZDetailViewController ()
 
@@ -43,10 +44,10 @@
     if (self) {
         self.place = place;
         
-        _ratingColors = @[[UIColor colorWithRed:69/255.0 green:178/255.0 blue:157/255.0 alpha:1.0],
-                          [UIColor colorWithRed:223/255.0 green:90/255.0 blue:73/255.0 alpha:1.0],
-                          [UIColor colorWithRed:226/255.0 green:122/255.0 blue:63/255.0 alpha:1.0],
-                          [UIColor colorWithRed:239/255.0 green:201/255.0 blue:76/255.0 alpha:1.0]];
+        _ratingColors = @[GREEN_COLOR,
+                          RED_COLOR,
+                          ORANGE_COLOR,
+                          YELLOW_COLOR];
         
         _rateDict = @{@"try":@0,@"love":@1,@"like":@2,@"okay":@3};
 
@@ -113,6 +114,9 @@
 //    self.ratings.selectedSegmentIndex = self.place.rating;
 
 }
+- (IBAction)closeButtonPressed:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 - (void)viewWillDisappear:(BOOL)animated
 {
@@ -170,6 +174,8 @@
         }
 
     }
+
+
 
 }
 

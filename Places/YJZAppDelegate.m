@@ -10,6 +10,7 @@
 #import "YJZPlace.h"
 #import "YJZPlacesViewController.h"
 #import "YJZPlaceStore.h"
+#import "YJZPlaceOpenTransition.h"
 
 @implementation YJZAppDelegate
 
@@ -29,9 +30,19 @@
      [NSDictionary dictionaryWithObjectsAndKeys:
       [UIColor whiteColor], NSForegroundColorAttributeName,
       [UIFont fontWithName:@"HelveticaNeue-Bold" size:20.0], NSFontAttributeName,nil]];
+    navController.navigationBarHidden = YES;
     [self.window makeKeyAndVisible];
     return YES;
 }
+
+- (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC
+{
+    NSLog(@"asking for anim controller");
+    YJZPlaceOpenTransition *anim = [[YJZPlaceOpenTransition alloc] init];
+    return anim;
+}
+
+
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {

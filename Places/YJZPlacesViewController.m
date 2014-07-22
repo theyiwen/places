@@ -10,6 +10,8 @@
 #import "YJZPlaceStore.h"
 #import "YJZPlace.h"
 #import "YJZDetailViewController.h"
+#import "YJZConstants.h"
+#import "YJZAppDelegate.h"
 
 @interface YJZPlacesViewController ()
 
@@ -26,12 +28,12 @@
 {
     self = [super initWithStyle:UITableViewStylePlain];
     if (self) {
-        _ratingColors = @[[UIColor colorWithRed:69/255.0 green:178/255.0 blue:157/255.0 alpha:1.0],
-                          [UIColor colorWithRed:223/255.0 green:90/255.0 blue:73/255.0 alpha:1.0],
-                          [UIColor colorWithRed:226/255.0 green:122/255.0 blue:63/255.0 alpha:1.0],
-                          [UIColor colorWithRed:239/255.0 green:201/255.0 blue:76/255.0 alpha:1.0]];
+        _ratingColors = @[GREEN_COLOR,
+                          RED_COLOR,
+                          ORANGE_COLOR,
+                          YELLOW_COLOR];
         
-        _accentColor = [UIColor colorWithRed:250/255.0 green:128/255.0 blue:114/255.0 alpha:1.0];
+        _accentColor = BLUE_COLOR;
         
         _collapsedSections = [[NSMutableArray alloc] initWithArray:@[@0,@0,@0,@0]];
         
@@ -83,6 +85,8 @@
 {
     [super viewDidLoad];
     
+    YJZAppDelegate *appDelegate = (YJZAppDelegate *)[[UIApplication sharedApplication] delegate];
+    self.navigationController.delegate = appDelegate;
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"UITableViewCell"];
 
 }
@@ -96,7 +100,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    self.navigationController.navigationBarHidden = NO;
+    self.navigationController.navigationBarHidden = YES;
 //    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
 
 }
