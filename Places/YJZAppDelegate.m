@@ -10,7 +10,9 @@
 #import "YJZPlace.h"
 #import "YJZPlacesViewController.h"
 #import "YJZPlaceStore.h"
-#import "YJZPlaceOpenTransition.h"
+#import "YJZPlaceAnim.h"
+
+
 
 @implementation YJZAppDelegate
 
@@ -19,10 +21,16 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     
+    // controller set up
     YJZPlacesViewController *pvc = [[YJZPlacesViewController alloc] init];
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:pvc];
+    navController.delegate = self;
+    
+    
     self.window.rootViewController = navController;
     self.window.backgroundColor = [UIColor whiteColor];
+    
+    // nav bar customization
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:51/255.0 green:77/255.0 blue:92/255.0 alpha:1.0]];
     [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -100.f) forBarMetrics:UIBarMetricsDefault];
@@ -31,15 +39,23 @@
       [UIColor whiteColor], NSForegroundColorAttributeName,
       [UIFont fontWithName:@"HelveticaNeue-Bold" size:20.0], NSFontAttributeName,nil]];
     navController.navigationBarHidden = YES;
+    
     [self.window makeKeyAndVisible];
     return YES;
 }
 
 - (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC
 {
-    NSLog(@"asking for anim controller");
-    YJZPlaceOpenTransition *anim = [[YJZPlaceOpenTransition alloc] init];
-    return anim;
+    NSString *action;
+    if (operation == UINavigationControllerOperationPush) {
+        YJZPlaceAnim *anim = [[YJZPlaceAnim alloc] initWithAction:@"open"];
+        return anim;
+    }
+    else if (operation == UINavigationControllerOperationPop) {
+        YJZPlaceAnim *anim = [[YJZPlaceAnim alloc] initWithAction:@"close"];
+        return anim;
+    }
+        return nil;
 }
 
 
@@ -55,6 +71,7 @@
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 //    BOOL success = [[YJZPlaceStore sharedStore] saveChanges];
+    
     [[YJZPlaceStore sharedStore] saveChanges];
 
 //    if (success) {

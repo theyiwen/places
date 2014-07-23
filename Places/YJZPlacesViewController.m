@@ -85,8 +85,6 @@
 {
     [super viewDidLoad];
     
-    YJZAppDelegate *appDelegate = (YJZAppDelegate *)[[UIApplication sharedApplication] delegate];
-    self.navigationController.delegate = appDelegate;
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"UITableViewCell"];
 
 }

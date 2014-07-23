@@ -1,5 +1,5 @@
 //
-//  YJZPlaceOpenTransition.h
+//  YJZPlaceAnim.h
 //  Places
 //
 //  Created by Yiwen Zhan on 7/22/14.
@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-@interface YJZPlaceOpenTransition : NSObject <UIViewControllerAnimatedTransitioning>
+@interface YJZPlaceAnim : NSObject <UIViewControllerAnimatedTransitioning>
+
+-(instancetype)initWithAction:(NSString *) action;
 
 @end
