@@ -90,6 +90,13 @@
 //    [[YJZPlaceStore sharedStore] updateRating:newRating forPlace:self.place];
 //}
 
+- (IBAction)panGestureDetected:(UIPanGestureRecognizer *)sender {
+    CGPoint velocity = [sender velocityInView:self.view];
+    CGPoint translation = [sender translationInView:self.view];
+//    NSLog(@"v: %@, t: %@", velocity.x, translation.x);
+    if (translation.y > 0)
+        [self.navigationController popViewControllerAnimated:YES];
+}
 
 #pragma mark - views appearing and disappearing
 

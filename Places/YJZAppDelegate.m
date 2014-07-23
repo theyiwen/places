@@ -11,6 +11,7 @@
 #import "YJZPlacesViewController.h"
 #import "YJZPlaceStore.h"
 #import "YJZPlaceAnim.h"
+#import "YJZNavViewController.h"
 
 
 
@@ -23,44 +24,15 @@
     
     // controller set up
     YJZPlacesViewController *pvc = [[YJZPlacesViewController alloc] init];
-    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:pvc];
-    navController.delegate = self;
-    
-    
+    YJZNavViewController *navController = [[YJZNavViewController alloc] initWithRootViewController:pvc];
     self.window.rootViewController = navController;
     self.window.backgroundColor = [UIColor whiteColor];
-    
-    // nav bar customization
-    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:51/255.0 green:77/255.0 blue:92/255.0 alpha:1.0]];
-    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -100.f) forBarMetrics:UIBarMetricsDefault];
-    [[UINavigationBar appearance] setTitleTextAttributes:
-     [NSDictionary dictionaryWithObjectsAndKeys:
-      [UIColor whiteColor], NSForegroundColorAttributeName,
-      [UIFont fontWithName:@"HelveticaNeue-Bold" size:20.0], NSFontAttributeName,nil]];
-    navController.navigationBarHidden = YES;
     
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
     
     [self.window makeKeyAndVisible];
     return YES;
 }
-
-- (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC
-{
-    NSString *action;
-    if (operation == UINavigationControllerOperationPush) {
-        YJZPlaceAnim *anim = [[YJZPlaceAnim alloc] initWithAction:@"open"];
-        return anim;
-    }
-    else if (operation == UINavigationControllerOperationPop) {
-        YJZPlaceAnim *anim = [[YJZPlaceAnim alloc] initWithAction:@"close"];
-        return anim;
-    }
-        return nil;
-}
-
-
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
