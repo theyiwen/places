@@ -40,6 +40,8 @@
       [UIFont fontWithName:@"HelveticaNeue-Bold" size:20.0], NSFontAttributeName,nil]];
     navController.navigationBarHidden = YES;
     
+    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
+    
     [self.window makeKeyAndVisible];
     return YES;
 }

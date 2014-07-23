@@ -23,6 +23,7 @@
 //@property (weak, nonatomic) IBOutlet UIButton *twoRatingButton;
 //@property (weak, nonatomic) IBOutlet UIButton *threeRatingButton;
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *rateButtons;
+@property (weak, nonatomic) IBOutlet UIView *containerView;
 
 @property (nonatomic) NSArray *ratingColors;
 @property (nonatomic) NSDictionary *rateDict;
@@ -96,6 +97,10 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    self.containerView.layer.cornerRadius = 5;
+    self.containerView.layer.masksToBounds = YES;
+    self.containerView.layer.borderWidth = 1.0;
+
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -110,8 +115,10 @@
         [self.tagsField.text stringByAppendingString:[NSString stringWithFormat:@"%@, ",s]];
     }
 //    self.ratingField.text = [NSString stringWithFormat:@"%i",self.place.rating];
-    [self updateButtonStyles:self.place.rating];
 //    self.ratings.selectedSegmentIndex = self.place.rating;
+
+    [self updateButtonStyles:self.place.rating];
+
 
 }
 - (IBAction)closeButtonPressed:(id)sender {
