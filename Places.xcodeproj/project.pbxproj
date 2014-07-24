@@ -135,14 +135,9 @@
 		93A86AB3197B16060015F16F /* Places */ = {
 			isa = PBXGroup;
 			children = (
+				93AFA3EF1981B0F0004F71F8 /* Model */,
 				93A86ABC197B16060015F16F /* YJZAppDelegate.h */,
 				93A86ABD197B16060015F16F /* YJZAppDelegate.m */,
-				93A86ADC197B16300015F16F /* YJZPlace.h */,
-				93A86ADD197B16300015F16F /* YJZPlace.m */,
-				93A1BD55197F0B4D007DBC9E /* YJZConstants.h */,
-				93A1BD56197F0B4D007DBC9E /* YJZConstants.m */,
-				93A86ADF197B2C080015F16F /* YJZPlaceStore.h */,
-				93A86AE0197B2C080015F16F /* YJZPlaceStore.m */,
 				93A86AE2197B3B1E0015F16F /* YJZPlacesViewController.h */,
 				93A86AE3197B3B1E0015F16F /* YJZPlacesViewController.m */,
 				93D96826197CC95500D9D04D /* SectionView.xib */,
@@ -188,6 +183,19 @@
 				93A86ACF197B16060015F16F /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		93AFA3EF1981B0F0004F71F8 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				93A1BD55197F0B4D007DBC9E /* YJZConstants.h */,
+				93A1BD56197F0B4D007DBC9E /* YJZConstants.m */,
+				93A86ADF197B2C080015F16F /* YJZPlaceStore.h */,
+				93A86AE0197B2C080015F16F /* YJZPlaceStore.m */,
+				93A86ADC197B16300015F16F /* YJZPlace.h */,
+				93A86ADD197B16300015F16F /* YJZPlace.m */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
