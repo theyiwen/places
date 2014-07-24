@@ -9,6 +9,7 @@
 #import "YJZNavViewController.h"
 #import "YJZPlaceAnim.h"
 #import "YJZPanTransition.h"
+#import "YJZDetailViewController.h"
 
 @interface YJZNavViewController ()
 
@@ -62,10 +63,12 @@
 
 - (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
-    if (!self.panTransition) {
-        self.panTransition = [[YJZPanTransition alloc] init];
+    if ([viewController isKindOfClass:[YJZDetailViewController class]]) {
+        if (!self.panTransition) {
+            self.panTransition = [[YJZPanTransition alloc] init];
+        }
+        [self.panTransition addInteractionToViewController:viewController];
     }
-    [self.panTransition addInteractionToViewController:viewController];
 }
 
 - (id<UIViewControllerInteractiveTransitioning>)navigationController:(UINavigationController *)navigationController interactionControllerForAnimationController:(id<UIViewControllerAnimatedTransitioning>)animationController
