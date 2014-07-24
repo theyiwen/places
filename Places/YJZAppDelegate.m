@@ -12,7 +12,6 @@
 #import "YJZPlaceStore.h"
 #import "YJZPlaceAnim.h"
 #import "YJZNavViewController.h"
-#import "YJZSearchViewController.h"
 
 
 
@@ -24,8 +23,7 @@
     // Override point for customization after application launch.
     
     // controller set up
-//    YJZSearchViewController *svc = [[YJZSearchViewController alloc] init];
-//    self.window.rootViewController = svc;
+
     
     YJZPlacesViewController *pvc = [[YJZPlacesViewController alloc] init];
     YJZNavViewController *navController = [[YJZNavViewController alloc] initWithRootViewController:pvc];
