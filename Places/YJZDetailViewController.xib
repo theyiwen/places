@@ -123,19 +123,11 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     <gestureRecognizers/>
-                    <connections>
-                        <outletCollection property="gestureRecognizers" destination="21b-Yb-LK7" appends="YES" id="Asx-Wk-dHN"/>
-                    </connections>
                 </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
         </view>
-        <panGestureRecognizer minimumNumberOfTouches="1" id="21b-Yb-LK7">
-            <connections>
-                <action selector="panGestureDetected:" destination="-1" id="Yr8-Cv-jST"/>
-            </connections>
-        </panGestureRecognizer>
     </objects>
 </document>

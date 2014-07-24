@@ -94,8 +94,8 @@
     CGPoint velocity = [sender velocityInView:self.view];
     CGPoint translation = [sender translationInView:self.view];
 //    NSLog(@"v: %@, t: %@", velocity.x, translation.x);
-    if (translation.y > 0)
-        [self.navigationController popViewControllerAnimated:YES];
+//    if (translation.y > 0)
+//        [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - views appearing and disappearing
@@ -106,7 +106,7 @@
     // Do any additional setup after loading the view from its nib.
     self.containerView.layer.cornerRadius = 5;
     self.containerView.layer.masksToBounds = YES;
-    self.containerView.layer.borderWidth = 1.0;
+//    self.containerView.layer.borderWidth = 1.0;
 
 }
 

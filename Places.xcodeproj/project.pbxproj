@@ -28,6 +28,7 @@
 		93A86AED197B64340015F16F /* YJZDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A86AEB197B64340015F16F /* YJZDetailViewController.m */; };
 		93A86AEE197B64340015F16F /* YJZDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93A86AEC197B64340015F16F /* YJZDetailViewController.xib */; };
 		93D96827197CC95500D9D04D /* SectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93D96826197CC95500D9D04D /* SectionView.xib */; };
+		93E6D47A19809BD600FD1C7B /* YJZPanTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E6D47919809BD600FD1C7B /* YJZPanTransition.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +74,8 @@
 		93A86AEB197B64340015F16F /* YJZDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJZDetailViewController.m; sourceTree = "<group>"; };
 		93A86AEC197B64340015F16F /* YJZDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YJZDetailViewController.xib; sourceTree = "<group>"; };
 		93D96826197CC95500D9D04D /* SectionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SectionView.xib; sourceTree = "<group>"; };
+		93E6D47819809BD600FD1C7B /* YJZPanTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJZPanTransition.h; sourceTree = "<group>"; };
+		93E6D47919809BD600FD1C7B /* YJZPanTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJZPanTransition.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +151,8 @@
 				93A86AEC197B64340015F16F /* YJZDetailViewController.xib */,
 				93A1BD61197F45E3007DBC9E /* YJZPlaceAnim.h */,
 				93A1BD62197F45E3007DBC9E /* YJZPlaceAnim.m */,
+				93E6D47819809BD600FD1C7B /* YJZPanTransition.h */,
+				93E6D47919809BD600FD1C7B /* YJZPanTransition.m */,
 				9383029E197F86D4008442A6 /* YJZNavViewController.h */,
 				9383029F197F86D4008442A6 /* YJZNavViewController.m */,
 				93A86ABF197B16060015F16F /* Images.xcassets */,
@@ -285,6 +290,7 @@
 			files = (
 				93A86ABE197B16060015F16F /* YJZAppDelegate.m in Sources */,
 				93A86AE1197B2C080015F16F /* YJZPlaceStore.m in Sources */,
+				93E6D47A19809BD600FD1C7B /* YJZPanTransition.m in Sources */,
 				93A86AE4197B3B1E0015F16F /* YJZPlacesViewController.m in Sources */,
 				93A86ABA197B16060015F16F /* main.m in Sources */,
 				93A86ADE197B16300015F16F /* YJZPlace.m in Sources */,

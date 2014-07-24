@@ -8,11 +8,11 @@
 
 #import "YJZNavViewController.h"
 #import "YJZPlaceAnim.h"
+#import "YJZPanTransition.h"
 
 @interface YJZNavViewController ()
 
-@property (strong, nonatomic) UIPercentDrivenInteractiveTransition* interactionController;
-
+@property (strong, nonatomic) YJZPanTransition* panTransition;
 
 @end
 
@@ -39,31 +39,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    UIPanGestureRecognizer* panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];
-    [self.view addGestureRecognizer:panRecognizer];
-}
-
-- (void)pan:(UIPanGestureRecognizer*)recognizer
-{
-//    UIView* view = self.navigationController.view;
-//    if (recognizer.state == UIGestureRecognizerStateBegan) {
-//        CGPoint location = [recognizer locationInView:view];
-//        if (location.x <  CGRectGetMidX(view.bounds) && self.navigationController.viewControllers.count > 1) { // left half
-//            self.interactionController = [UIPercentDrivenInteractiveTransition new];
-//            [self.navigationController popViewControllerAnimated:YES];
-//        }
-//    } else if (recognizer.state == UIGestureRecognizerStateChanged) {
-//        CGPoint translation = [recognizer translationInView:view];
-//        CGFloat d = fabs(translation.x / CGRectGetWidth(view.bounds));
-//        [self.interactionController updateInteractiveTransition:d];
-//    } else if (recognizer.state == UIGestureRecognizerStateEnded) {
-//        if ([recognizer velocityInView:view].x > 0) {
-//            [self.interactionController finishInteractiveTransition];
-//        } else {
-//            [self.interactionController cancelInteractiveTransition];
-//        }
-//        self.interactionController = nil;
-//    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -85,9 +60,21 @@
     return nil;
 }
 
+- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    if (!self.panTransition) {
+        self.panTransition = [[YJZPanTransition alloc] init];
+    }
+    [self.panTransition addInteractionToViewController:viewController];
+}
+
 - (id<UIViewControllerInteractiveTransitioning>)navigationController:(UINavigationController *)navigationController interactionControllerForAnimationController:(id<UIViewControllerAnimatedTransitioning>)animationController
 {
-    return self.interactionController;
+    if (self.panTransition.isInteractive)
+    {
+        return self.panTransition;
+    }
+    return nil;
 }
 
 /*

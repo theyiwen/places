@@ -8,10 +8,12 @@
 
 #import "YJZPlaceAnim.h"
 
+
 @interface YJZPlaceAnim() <UIViewControllerAnimatedTransitioning>
 @property NSString* action;
 @property UIView* blackView;
 @property CGRect screenRect;
+@property BOOL debug;
 @end
 
 @implementation YJZPlaceAnim
@@ -23,6 +25,7 @@
         _action = action;
         _screenRect = [[UIScreen mainScreen] bounds];
         _blackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.screenRect.size.width, self.screenRect.size.height)];
+        _debug = false;
         self.blackView.backgroundColor = [UIColor blackColor];
     }
     return self;
@@ -31,9 +34,12 @@
 
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext
 {
+    if (self.debug) {
+        return 10.0;
+    }
     if ([self.action isEqual:@"open"])
     {
-        return 0.8;
+        return 0.75;
     }
     else {
         return 0.4;
@@ -95,15 +101,20 @@
     
     [UIView animateWithDuration:[self transitionDuration:transitionContext]
                           delay:0
-                        options:UIViewAnimationOptionCurveEaseOut
+                        options:UIViewAnimationOptionCurveEaseIn
                      animations:^{
                          fromVC.view.frame = CGRectMake(0, self.screenRect.size.height, fromVC.view.bounds.size.width, fromVC.view.bounds.size.height);
                          self.blackView.alpha = 0;
                      }
                      completion:^(BOOL finished) {
-                         [self.blackView removeFromSuperview];
-                         [fromVC.view removeFromSuperview];
-                         [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
+
+                         if ([transitionContext transitionWasCancelled]) {
+                             [transitionContext completeTransition:NO];
+                         } else {
+                             [transitionContext completeTransition:YES];
+                             [self.blackView removeFromSuperview];
+                             [fromVC.view removeFromSuperview];
+                         }
                      }];
     
 

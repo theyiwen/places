@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Places/YJZPlaceAnim.m"
-            timestampString = "427785201.197237"
+            timestampString = "427831550.138867"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "39"
-            endingLineNumber = "39"
+            startingLineNumber = "45"
+            endingLineNumber = "45"
             landmarkName = "-transitionDuration:"
             landmarkType = "5">
          </BreakpointContent>
@@ -39,15 +39,15 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             shouldBeEnabled = "No"
-            ignoreCount = "0"
+            ignoreCount = "1"
             continueAfterRunningActions = "No"
-            filePath = "Places/YJZNavViewController.m"
-            timestampString = "427789057.883093"
+            filePath = "Places/YJZPanTransition.m"
+            timestampString = "427864520.619628"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "41"
-            endingLineNumber = "41"
-            landmarkName = "-viewWillAppear:"
+            startingLineNumber = "24"
+            endingLineNumber = "24"
+            landmarkName = "-addInteractionToViewController:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
