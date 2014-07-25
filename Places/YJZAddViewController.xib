@@ -6,6 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="YJZAddViewController">
             <connections>
+                <outlet property="loading" destination="lVg-8I-C4x" id="aPx-F5-agF"/>
                 <outlet property="tableView" destination="hZs-Gz-E3Z" id="G0m-DC-diK"/>
                 <outlet property="textField" destination="nh8-wA-yJ0" id="hm5-fy-ctn"/>
                 <outlet property="textView" destination="GYm-Lf-aBN" id="Pto-x9-Gtc"/>
@@ -47,6 +48,10 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                 </view>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="lVg-8I-C4x">
+                    <rect key="frame" x="150" y="198" width="20" height="20"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </activityIndicatorView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>

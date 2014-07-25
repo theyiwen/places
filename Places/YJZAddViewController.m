@@ -15,7 +15,8 @@
 @interface YJZAddViewController ()
 
 @property (weak, nonatomic) IBOutlet UITextField *textField;
-
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loading;
+@property (nonatomic, strong) UIView *overlay;
 
 @property (nonatomic, strong) id dataObject;
 @property (nonatomic, strong) NSMutableArray *venueData;
@@ -37,22 +38,30 @@
 {
     [super viewDidLoad];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"UITableViewCell"];
+    CGRect screen = [[UIScreen mainScreen] bounds];
+    self.overlay = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screen.size.width, screen.size.height)];
+    self.overlay.backgroundColor = [UIColor blackColor];
+    [self.view insertSubview:self.overlay atIndex:0];
 
+    //table view setup
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    
     self.tableView.layer.cornerRadius = 5;
     self.tableView.layer.masksToBounds = YES;
     self.tableView.hidden = YES;
+    self.tableView.rowHeight = (CGFloat)50;
+    self.tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
+    
+    //text field setup
     self.textField.delegate = self;
     self.textField.backgroundColor = [UIColor whiteColor];
     self.textView.layer.cornerRadius = 5;
     self.textView.layer.masksToBounds = YES;
-    self.tableView.rowHeight = (CGFloat)50;
-    self.tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
+    
+    self.loading.hidesWhenStopped = YES;
 
     self.view.backgroundColor = [UIColor clearColor];
-
+//    NSLog(@"post load subviews: %i",[self.view.subviews count]);
     
     // Do any additional setup after loading the view from its nib.
 }
@@ -60,22 +69,29 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    //pre animated state
+    self.overlay.alpha = 0;
+    self.textView.hidden = YES;
+    
     //putting it here makes keyboard animate at the same time, but sideways
 //    [self.textField becomeFirstResponder];
 }
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear: animated];
-    [self.textField becomeFirstResponder];
+    [self animdateInInputView];
+
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
     UIView *bgView = self.view.subviews[0];
-    UIView *blackView = self.view.subviews[1];
-    [blackView removeFromSuperview];
     [bgView removeFromSuperview];
+//    NSLog(@"post clean subviews: %i",[self.view.subviews count]);
+
+
     
 }
 - (IBAction)backgroundTouched:(id)sender {
@@ -90,12 +106,33 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
+    [self.loading startAnimating];
     [self fetchPlaces:textField.text];
-//    [textField resignFirstResponder];
     return YES;
+}
+
+- (void)animdateInInputView
+{
+    self.textView.hidden = NO;
+    self.textView.frame = CGRectMake(5,-70,self.textView.bounds.size.width,self.textView.bounds.size.height);
+
+    [self.textField becomeFirstResponder];
+    [UIView animateWithDuration:0.6
+                          delay:0
+         usingSpringWithDamping:0.7
+          initialSpringVelocity:0.0f
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         self.textView.frame = CGRectMake(5,30,self.textView.bounds.size.width,self.textView.bounds.size.height);
+                         self.overlay.alpha = 0.7;
+                     } completion:^(BOOL finished) {
+                         
+                     }];
+
 }
 - (void)animateInTableView
 {
+    [self.loading stopAnimating];
     self.tableView.hidden = NO;
     self.tableView.frame = CGRectMake(5, 500, self.tableView.frame.size.width, self.tableView.frame.size.height);
     
@@ -115,7 +152,6 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
     return 1;
 }

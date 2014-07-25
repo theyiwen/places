@@ -47,7 +47,7 @@
     }
     else if ([self.action isEqual:@"add"])
     {
-        return 0.5;
+        return 0;
     }
     else if ([self.action isEqual:@"addRev"])
     {
@@ -135,26 +135,23 @@
     YJZAddViewController *toVC = (YJZAddViewController *)[transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
     UIViewController *fromVC = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
 
-    
-    UIView *search = toVC.textView;
-    search.frame = CGRectMake(5,-70,search.bounds.size.width,search.bounds.size.height);
-
     toVC.view.backgroundColor = [UIColor clearColor];
     
     UIView *container = [transitionContext containerView];
     self.blackView.alpha = 0.0;
-    [container addSubview:self.blackView];
     UIView *fromSnap = [fromVC.view snapshotViewAfterScreenUpdates:YES];
         [container addSubview:toVC.view];
     
+//    //not sure why they don't work here
+//    [toVC.view insertSubview:fromSnap atIndex:0];
+//    [transitionContext completeTransition:YES];
+
+    
     [UIView animateWithDuration:[self transitionDuration:transitionContext]
                           delay:0
-         usingSpringWithDamping:0.7
-          initialSpringVelocity:0.0f
-                        options:UIViewAnimationOptionCurveEaseInOut
+                        options:UIViewAnimationOptionCurveEaseIn
                      animations:^{
-                         self.blackView.alpha = 0.7;
-                         search.frame = CGRectMake(5,30,search.bounds.size.width,search.bounds.size.height);
+
                      }
                      completion:^(BOOL finished) {
                          
@@ -162,10 +159,8 @@
                              [transitionContext completeTransition:NO];
                          } else {
                              [transitionContext completeTransition:YES];
-                             UIView *blackSnap = [self.blackView snapshotViewAfterScreenUpdates:YES];
                              [toVC.view insertSubview:fromSnap atIndex:0];
-                             [toVC.view insertSubview:blackSnap atIndex:1];
-                             [self.blackView removeFromSuperview];
+//                             NSLog(@"post animation subviews:%i",[toVC.view.subviews count]);
                          }
                      }];
     
