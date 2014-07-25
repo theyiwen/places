@@ -11,5 +11,7 @@
 @interface YJZAddViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *textView;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+
 
 @end

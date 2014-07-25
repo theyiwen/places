@@ -49,6 +49,10 @@
     {
         return 0.5;
     }
+    else if ([self.action isEqual:@"addRev"])
+    {
+        return 0.4;
+    }
     return 0;
 }
 
@@ -167,6 +171,41 @@
     
 }
 
+- (void)animateAddReverseTransition:(id<UIViewControllerContextTransitioning>)transitionContext
+{
+    YJZAddViewController *fromVC = (YJZAddViewController *)[transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
+    UIViewController *toVC = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+
+    UIView *blackView = fromVC.view.subviews[1];
+    
+    UIView *search = fromVC.textView;
+    UIView *table = fromVC.tableView;
+    UIView *container = [transitionContext containerView];
+    [container insertSubview:toVC.view atIndex:0];
+
+    
+    [UIView animateWithDuration:[self transitionDuration:transitionContext]
+                          delay:0
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         search.frame = CGRectMake(5,-70,search.bounds.size.width,search.bounds.size.height);
+                         table.frame = CGRectMake(5, self.screenRect.size.height, table.frame.size.width, table.frame.size.height);
+                         blackView.alpha = 0;
+                     }
+                     completion:^(BOOL finished) {
+                         
+                         if ([transitionContext transitionWasCancelled]) {
+                             [transitionContext completeTransition:NO];
+                         } else {
+                             [transitionContext completeTransition:YES];
+                         }
+                     }];
+    
+    
+    
+
+}
+
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext
 {
     if ([self.action isEqual:@"open"])
@@ -179,6 +218,8 @@
     else if ([self.action isEqual:@"add"]){
         [self animateAddTransition:transitionContext];
     }
+    else if ([self.action isEqual:@"addRev"])
+        [self animateAddReverseTransition:transitionContext];
 }
 
 # pragma mark - misc old animations

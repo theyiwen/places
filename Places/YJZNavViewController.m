@@ -64,6 +64,11 @@
         YJZPlaceAnim *anim = [[YJZPlaceAnim alloc] initWithAction:@"add"];
         return anim;
     }
+    else if (operation == UINavigationControllerOperationPop && [fromVC isKindOfClass:[YJZAddViewController class]])
+    {
+        YJZPlaceAnim *anim = [[YJZPlaceAnim alloc] initWithAction:@"addRev"];
+        return anim;
+    }
     return nil;
 }
 

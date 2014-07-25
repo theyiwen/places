@@ -14,7 +14,6 @@
 
 @interface YJZAddViewController ()
 
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 
 
@@ -58,19 +57,29 @@
     // Do any additional setup after loading the view from its nib.
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    //putting it here makes keyboard animate at the same time, but sideways
+//    [self.textField becomeFirstResponder];
+}
 - (void)viewDidAppear:(BOOL)animated
 {
-
+    [super viewDidAppear: animated];
     [self.textField becomeFirstResponder];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
+    [super viewDidDisappear:animated];
     UIView *bgView = self.view.subviews[0];
     UIView *blackView = self.view.subviews[1];
     [blackView removeFromSuperview];
     [bgView removeFromSuperview];
     
+}
+- (IBAction)backgroundTouched:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning
