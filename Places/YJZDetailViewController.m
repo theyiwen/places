@@ -54,7 +54,6 @@
 
     }
     return self;
-    
 }
 
 #pragma mark - editing and saving

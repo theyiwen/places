@@ -31,7 +31,7 @@
         {
             self.interactive = YES;
             self.panPercent = 0;
-            [self.navController popViewControllerAnimated:YES];
+            [self.navController popToRootViewControllerAnimated:YES];
             break;
         }
         case UIGestureRecognizerStateChanged:

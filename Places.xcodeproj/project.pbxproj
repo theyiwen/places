@@ -27,6 +27,9 @@
 		93A86AE4197B3B1E0015F16F /* YJZPlacesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A86AE3197B3B1E0015F16F /* YJZPlacesViewController.m */; };
 		93A86AED197B64340015F16F /* YJZDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A86AEB197B64340015F16F /* YJZDetailViewController.m */; };
 		93A86AEE197B64340015F16F /* YJZDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93A86AEC197B64340015F16F /* YJZDetailViewController.xib */; };
+		93AFA3F21981B247004F71F8 /* YJZAPIConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 93AFA3F11981B247004F71F8 /* YJZAPIConstants.m */; };
+		93AFA4011981DC29004F71F8 /* YJZAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93AFA3FF1981DC29004F71F8 /* YJZAddViewController.m */; };
+		93AFA4021981DC29004F71F8 /* YJZAddViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93AFA4001981DC29004F71F8 /* YJZAddViewController.xib */; };
 		93D96827197CC95500D9D04D /* SectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93D96826197CC95500D9D04D /* SectionView.xib */; };
 		93E6D47A19809BD600FD1C7B /* YJZPanTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E6D47919809BD600FD1C7B /* YJZPanTransition.m */; };
 /* End PBXBuildFile section */
@@ -73,6 +76,11 @@
 		93A86AEA197B64340015F16F /* YJZDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJZDetailViewController.h; sourceTree = "<group>"; };
 		93A86AEB197B64340015F16F /* YJZDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJZDetailViewController.m; sourceTree = "<group>"; };
 		93A86AEC197B64340015F16F /* YJZDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YJZDetailViewController.xib; sourceTree = "<group>"; };
+		93AFA3F01981B247004F71F8 /* YJZAPIConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJZAPIConstants.h; sourceTree = "<group>"; };
+		93AFA3F11981B247004F71F8 /* YJZAPIConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJZAPIConstants.m; sourceTree = "<group>"; };
+		93AFA3FE1981DC29004F71F8 /* YJZAddViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJZAddViewController.h; sourceTree = "<group>"; };
+		93AFA3FF1981DC29004F71F8 /* YJZAddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJZAddViewController.m; sourceTree = "<group>"; };
+		93AFA4001981DC29004F71F8 /* YJZAddViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YJZAddViewController.xib; sourceTree = "<group>"; };
 		93D96826197CC95500D9D04D /* SectionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SectionView.xib; sourceTree = "<group>"; };
 		93E6D47819809BD600FD1C7B /* YJZPanTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJZPanTransition.h; sourceTree = "<group>"; };
 		93E6D47919809BD600FD1C7B /* YJZPanTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJZPanTransition.m; sourceTree = "<group>"; };
@@ -155,6 +163,11 @@
 				93E6D47919809BD600FD1C7B /* YJZPanTransition.m */,
 				9383029E197F86D4008442A6 /* YJZNavViewController.h */,
 				9383029F197F86D4008442A6 /* YJZNavViewController.m */,
+				93AFA3F01981B247004F71F8 /* YJZAPIConstants.h */,
+				93AFA3F11981B247004F71F8 /* YJZAPIConstants.m */,
+				93AFA3FE1981DC29004F71F8 /* YJZAddViewController.h */,
+				93AFA3FF1981DC29004F71F8 /* YJZAddViewController.m */,
+				93AFA4001981DC29004F71F8 /* YJZAddViewController.xib */,
 				93A86ABF197B16060015F16F /* Images.xcassets */,
 				93A86AB4197B16060015F16F /* Supporting Files */,
 			);
@@ -269,6 +282,7 @@
 				93D96827197CC95500D9D04D /* SectionView.xib in Resources */,
 				93A86AB8197B16060015F16F /* InfoPlist.strings in Resources */,
 				93A86AC0197B16060015F16F /* Images.xcassets in Resources */,
+				93AFA4021981DC29004F71F8 /* YJZAddViewController.xib in Resources */,
 				93A86AEE197B64340015F16F /* YJZDetailViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -288,9 +302,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93AFA4011981DC29004F71F8 /* YJZAddViewController.m in Sources */,
 				93A86ABE197B16060015F16F /* YJZAppDelegate.m in Sources */,
 				93A86AE1197B2C080015F16F /* YJZPlaceStore.m in Sources */,
 				93E6D47A19809BD600FD1C7B /* YJZPanTransition.m in Sources */,
+				93AFA3F21981B247004F71F8 /* YJZAPIConstants.m in Sources */,
 				93A86AE4197B3B1E0015F16F /* YJZPlacesViewController.m in Sources */,
 				93A86ABA197B16060015F16F /* main.m in Sources */,
 				93A86ADE197B16300015F16F /* YJZPlace.m in Sources */,

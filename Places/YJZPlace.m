@@ -30,6 +30,23 @@
     return [self initWithName:name notes:@"" rating:0 tags:[NSMutableArray array]];
 }
 
+- (instancetype)initWithFSData:(NSDictionary *)data rating:(int)rating
+{
+    self = [super init];
+    if(self) {
+        _fsID = data[@"id"];
+        _name = data[@"name"];
+        _streetName = data[@"location"][@"address"];
+        NSArray *cat = data[@"categories"];
+        _fsCategories = [[NSMutableArray alloc] init];
+        _rating = rating;
+        for (int i=0; i<[cat count]; i++)
+            [self.fsCategories addObject:cat[i][@"name"] ];
+        return self;
+    }
+    return nil;
+}
+
 - (NSString *)description
 {
     NSString *descStr =

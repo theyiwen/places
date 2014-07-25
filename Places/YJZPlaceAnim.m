@@ -7,6 +7,7 @@
 //
 
 #import "YJZPlaceAnim.h"
+#import "YJZAddViewController.h"
 
 
 @interface YJZPlaceAnim() <UIViewControllerAnimatedTransitioning>
@@ -41,9 +42,14 @@
     {
         return 0.75;
     }
-    else {
+    else if ([self.action isEqual:@"close"]){
         return 0.4;
     }
+    else if ([self.action isEqual:@"add"])
+    {
+        return 0.5;
+    }
+    return 0;
 }
 
 - (void)animateTransitionBounceUp:(id<UIViewControllerContextTransitioning>)transitionContext
@@ -66,7 +72,7 @@
     
     [UIView animateWithDuration:[self transitionDuration:transitionContext]
                           delay:0
-         usingSpringWithDamping:0.7
+         usingSpringWithDamping:0.8
           initialSpringVelocity:0.0f
                         options:UIViewAnimationOptionCurveEaseInOut
                      animations:^{
@@ -101,7 +107,7 @@
     
     [UIView animateWithDuration:[self transitionDuration:transitionContext]
                           delay:0
-                        options:UIViewAnimationOptionCurveEaseIn
+                        options:UIViewAnimationOptionCurveEaseInOut
                      animations:^{
                          fromVC.view.frame = CGRectMake(0, self.screenRect.size.height, fromVC.view.bounds.size.width, fromVC.view.bounds.size.height);
                          self.blackView.alpha = 0;
@@ -120,14 +126,58 @@
 
 }
 
+- (void)animateAddTransition:(id<UIViewControllerContextTransitioning>)transitionContext
+{
+    YJZAddViewController *toVC = (YJZAddViewController *)[transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+    UIViewController *fromVC = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
+
+    
+    UIView *search = toVC.textView;
+    search.frame = CGRectMake(5,-70,search.bounds.size.width,search.bounds.size.height);
+
+    toVC.view.backgroundColor = [UIColor clearColor];
+    
+    UIView *container = [transitionContext containerView];
+    self.blackView.alpha = 0.0;
+    [container addSubview:self.blackView];
+    UIView *fromSnap = [fromVC.view snapshotViewAfterScreenUpdates:YES];
+        [container addSubview:toVC.view];
+    
+    [UIView animateWithDuration:[self transitionDuration:transitionContext]
+                          delay:0
+         usingSpringWithDamping:0.7
+          initialSpringVelocity:0.0f
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         self.blackView.alpha = 0.7;
+                         search.frame = CGRectMake(5,30,search.bounds.size.width,search.bounds.size.height);
+                     }
+                     completion:^(BOOL finished) {
+                         
+                         if ([transitionContext transitionWasCancelled]) {
+                             [transitionContext completeTransition:NO];
+                         } else {
+                             [transitionContext completeTransition:YES];
+                             UIView *blackSnap = [self.blackView snapshotViewAfterScreenUpdates:YES];
+                             [toVC.view insertSubview:fromSnap atIndex:0];
+                             [toVC.view insertSubview:blackSnap atIndex:1];
+                             [self.blackView removeFromSuperview];
+                         }
+                     }];
+    
+}
+
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext
 {
     if ([self.action isEqual:@"open"])
     {
         [self animateTransitionBounceUp:transitionContext];
     }
-    else {
+    else if ([self.action isEqual:@"close"]){
         [self animateTransitionBounceDown:transitionContext];
+    }
+    else if ([self.action isEqual:@"add"]){
+        [self animateAddTransition:transitionContext];
     }
 }
 
