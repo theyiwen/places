@@ -35,6 +35,7 @@
                         rating:(int)rating;
 
 - (NSString *)getTagsAsString;
+- (NSString *)getCatsAsString;
 
 - (void)setTagsWithString:(NSString *)str;
 

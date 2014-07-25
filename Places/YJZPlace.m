@@ -70,6 +70,21 @@
     }
 }
 
+
+- (NSString *)getCatsAsString
+{
+    int tagLen = (int)[self.fsCategories count];
+    if (tagLen == 0)
+        return @"";
+    else {
+        NSMutableString *tagStr = [[NSMutableString alloc] initWithString:self.fsCategories[0]];
+        for (int i=1; i<tagLen; i++) {
+            [tagStr appendString:[NSString stringWithFormat:@", %@",self.fsCategories[i]]];
+        }
+        return tagStr;
+    }
+}
+
 - (void)setTagsWithString:(NSString *)str
 {
     self.tags = [[NSMutableArray alloc] initWithArray:[str componentsSeparatedByString:@", "]];
@@ -98,6 +113,10 @@
     [aCoder encodeObject:self.notes forKey:@"notes"];
     [aCoder encodeInt:self.rating forKey:@"rating"];
     [aCoder encodeObject:self.tags forKey:@"tags"];
+    [aCoder encodeObject:self.fsID forKey:@"fsID"];
+    [aCoder encodeObject:self.fsCategories forKey:@"fsCategories"];
+    [aCoder encodeObject:self.streetName forKey:@"streetName"];
+
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
@@ -108,6 +127,10 @@
         _notes = [aDecoder decodeObjectForKey:@"notes"];
         _rating = [aDecoder decodeIntForKey:@"rating"];
         _tags = [aDecoder decodeObjectForKey:@"tags"];
+        _fsCategories = [aDecoder decodeObjectForKey:@"fsCategories"];
+        _fsID = [aDecoder decodeObjectForKey:@"fsID"];
+        _streetName = [aDecoder decodeObjectForKey:@"streetName"];
+
     }
     return self;
 }

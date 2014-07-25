@@ -164,7 +164,7 @@
 
 - (void)fetchPlaces:(NSString *)query
 {
-    NSString *urlString = [NSString stringWithFormat:@"%@?near=San Francisco, CA&query=%@&intent=browse&categoryId=%@&client_id=%@&client_secret=%@&v=20140723",
+    NSString *urlString = [NSString stringWithFormat:@"%@search?near=San Francisco, CA&query=%@&intent=browse&categoryId=%@&client_id=%@&client_secret=%@&v=20140723",
                            API_URL,query,FOOD_CAT,CLIENT_ID,CLIENT_SECRET];
     
     urlString = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
