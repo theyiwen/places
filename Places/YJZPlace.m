@@ -21,6 +21,9 @@
         _notes = notes;
         _rating = rating;
         _tags = tags;
+        NSUUID *uuid = [[NSUUID alloc] init];
+        NSString *key = [uuid UUIDString];
+        _key = key;
     }
     return self;
 }
@@ -28,6 +31,27 @@
 - (instancetype)initWithName:(NSString *)name
 {
     return [self initWithName:name notes:@"" rating:0 tags:[NSMutableArray array]];
+}
+
+- (instancetype)initWithFSData:(NSDictionary *)data rating:(int)rating
+{
+    self = [super init];
+    if(self) {
+        _fsID = data[@"id"];
+        _name = data[@"name"];
+        _streetName = data[@"location"][@"address"];
+        NSArray *cat = data[@"categories"];
+        _fsCategories = [[NSMutableArray alloc] init];
+        _rating = rating;
+        for (int i=0; i<[cat count]; i++)
+            [self.fsCategories addObject:cat[i][@"name"] ];
+        
+        NSUUID *uuid = [[NSUUID alloc] init];
+        NSString *key = [uuid UUIDString];
+        _key = key;
+        return self;
+    }
+    return nil;
 }
 
 - (NSString *)description
@@ -48,6 +72,21 @@
         NSMutableString *tagStr = [[NSMutableString alloc] initWithString:self.tags[0]];
         for (int i=1; i<tagLen; i++) {
             [tagStr appendString:[NSString stringWithFormat:@", %@",self.tags[i]]];
+        }
+        return tagStr;
+    }
+}
+
+
+- (NSString *)getCatsAsString
+{
+    int tagLen = (int)[self.fsCategories count];
+    if (tagLen == 0)
+        return @"";
+    else {
+        NSMutableString *tagStr = [[NSMutableString alloc] initWithString:self.fsCategories[0]];
+        for (int i=1; i<tagLen; i++) {
+            [tagStr appendString:[NSString stringWithFormat:@", %@",self.fsCategories[i]]];
         }
         return tagStr;
     }
@@ -81,6 +120,10 @@
     [aCoder encodeObject:self.notes forKey:@"notes"];
     [aCoder encodeInt:self.rating forKey:@"rating"];
     [aCoder encodeObject:self.tags forKey:@"tags"];
+    [aCoder encodeObject:self.fsID forKey:@"fsID"];
+    [aCoder encodeObject:self.fsCategories forKey:@"fsCategories"];
+    [aCoder encodeObject:self.streetName forKey:@"streetName"];
+
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
@@ -91,6 +134,10 @@
         _notes = [aDecoder decodeObjectForKey:@"notes"];
         _rating = [aDecoder decodeIntForKey:@"rating"];
         _tags = [aDecoder decodeObjectForKey:@"tags"];
+        _fsCategories = [aDecoder decodeObjectForKey:@"fsCategories"];
+        _fsID = [aDecoder decodeObjectForKey:@"fsID"];
+        _streetName = [aDecoder decodeObjectForKey:@"streetName"];
+
     }
     return self;
 }

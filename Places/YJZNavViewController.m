@@ -10,6 +10,7 @@
 #import "YJZPlaceAnim.h"
 #import "YJZPanTransition.h"
 #import "YJZDetailViewController.h"
+#import "YJZAddViewController.h"
 
 @interface YJZNavViewController ()
 
@@ -50,12 +51,22 @@
 
 - (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC
 {
-    if (operation == UINavigationControllerOperationPush) {
+    if (operation == UINavigationControllerOperationPush && [toVC isKindOfClass:[YJZDetailViewController class]]) {
         YJZPlaceAnim *anim = [[YJZPlaceAnim alloc] initWithAction:@"open"];
         return anim;
     }
-    else if (operation == UINavigationControllerOperationPop) {
+    else if (operation == UINavigationControllerOperationPop && [fromVC isKindOfClass:[YJZDetailViewController class]]) {
         YJZPlaceAnim *anim = [[YJZPlaceAnim alloc] initWithAction:@"close"];
+        return anim;
+    }
+    else if (operation == UINavigationControllerOperationPush && [toVC isKindOfClass:[YJZAddViewController class]])
+    {
+        YJZPlaceAnim *anim = [[YJZPlaceAnim alloc] initWithAction:@"add"];
+        return anim;
+    }
+    else if (operation == UINavigationControllerOperationPop && [fromVC isKindOfClass:[YJZAddViewController class]])
+    {
+        YJZPlaceAnim *anim = [[YJZPlaceAnim alloc] initWithAction:@"addRev"];
         return anim;
     }
     return nil;

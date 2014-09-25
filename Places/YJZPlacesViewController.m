@@ -12,6 +12,7 @@
 #import "YJZDetailViewController.h"
 #import "YJZConstants.h"
 #import "YJZAppDelegate.h"
+#import "YJZAddViewController.h"
 
 @interface YJZPlacesViewController ()
 
@@ -115,10 +116,13 @@
 - (IBAction)addNewItem:(id)sender
 {
     int i = (int)[((UIView*)sender).superview tag];
-    YJZPlace *newPlace = [[YJZPlace alloc]initWithName:nil notes:nil rating:i tags:nil];
-    [[YJZPlaceStore sharedStore] addPlace:newPlace];
-    YJZDetailViewController *dvc = [[YJZDetailViewController alloc] initWithPlace:newPlace];
-    [self.navigationController pushViewController:dvc animated:YES];
+//    YJZSearchViewController *svc = [[YJZSearchViewController alloc] init];
+    YJZAddViewController *avc = [[YJZAddViewController alloc] init];
+    [self.navigationController pushViewController:avc animated:YES];
+//    YJZPlace *newPlace = [[YJZPlace alloc]initWithName:nil notes:nil rating:i tags:nil];
+//    [[YJZPlaceStore sharedStore] addPlace:newPlace];
+//    YJZDetailViewController *dvc = [[YJZDetailViewController alloc] initWithPlace:newPlace];
+//    [self.navigationController pushViewController:dvc animated:YES];
 }
 
 - (IBAction)toggleEditingMode:(id)sender

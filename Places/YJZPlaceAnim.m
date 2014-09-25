@@ -7,6 +7,7 @@
 //
 
 #import "YJZPlaceAnim.h"
+#import "YJZAddViewController.h"
 
 
 @interface YJZPlaceAnim() <UIViewControllerAnimatedTransitioning>
@@ -41,9 +42,18 @@
     {
         return 0.75;
     }
-    else {
+    else if ([self.action isEqual:@"close"]){
         return 0.4;
     }
+    else if ([self.action isEqual:@"add"])
+    {
+        return 0;
+    }
+    else if ([self.action isEqual:@"addRev"])
+    {
+        return 0.4;
+    }
+    return 0;
 }
 
 - (void)animateTransitionBounceUp:(id<UIViewControllerContextTransitioning>)transitionContext
@@ -66,7 +76,7 @@
     
     [UIView animateWithDuration:[self transitionDuration:transitionContext]
                           delay:0
-         usingSpringWithDamping:0.7
+         usingSpringWithDamping:0.8
           initialSpringVelocity:0.0f
                         options:UIViewAnimationOptionCurveEaseInOut
                      animations:^{
@@ -101,21 +111,96 @@
     
     [UIView animateWithDuration:[self transitionDuration:transitionContext]
                           delay:0
-                        options:UIViewAnimationOptionCurveEaseIn
+                        options:UIViewAnimationOptionCurveEaseInOut
                      animations:^{
                          fromVC.view.frame = CGRectMake(0, self.screenRect.size.height, fromVC.view.bounds.size.width, fromVC.view.bounds.size.height);
                          self.blackView.alpha = 0;
                      }
                      completion:^(BOOL finished) {
-
+                         fromVC.view.backgroundColor = [UIColor blackColor];
+                         [self.blackView removeFromSuperview];
                          if ([transitionContext transitionWasCancelled]) {
                              [transitionContext completeTransition:NO];
                          } else {
                              [transitionContext completeTransition:YES];
-                             [self.blackView removeFromSuperview];
                              [fromVC.view removeFromSuperview];
                          }
                      }];
+    
+
+}
+
+- (void)animateAddTransition:(id<UIViewControllerContextTransitioning>)transitionContext
+{
+    YJZAddViewController *toVC = (YJZAddViewController *)[transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+    UIViewController *fromVC = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
+
+    toVC.view.backgroundColor = [UIColor clearColor];
+    
+    UIView *container = [transitionContext containerView];
+    UIView *fromSnap = [fromVC.view snapshotViewAfterScreenUpdates:YES];
+    [container addSubview:toVC.view];
+    
+//    //not sure why they don't work here
+//    [toVC.view insertSubview:fromSnap atIndex:0];
+//    [transitionContext completeTransition:YES];
+
+    
+    [UIView animateWithDuration:[self transitionDuration:transitionContext]
+                          delay:0
+                        options:UIViewAnimationOptionCurveEaseIn
+                     animations:^{
+
+                     }
+                     completion:^(BOOL finished) {
+                         
+                         if ([transitionContext transitionWasCancelled]) {
+                             [transitionContext completeTransition:NO];
+                         } else {
+                             [transitionContext completeTransition:YES];
+                             [toVC.view insertSubview:fromSnap atIndex:0];
+//                             NSLog(@"post animation subviews:%i",[toVC.view.subviews count]);
+                         }
+                     }];
+    
+}
+
+- (void)animateAddReverseTransition:(id<UIViewControllerContextTransitioning>)transitionContext
+{
+    YJZAddViewController *fromVC = (YJZAddViewController *)[transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
+    UIViewController *toVC = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+
+//    NSLog(@"pre anim subviews: %i",[fromVC.view.subviews count]);
+
+    UIView *blackView = fromVC.overlay;
+    
+    UIView *search = fromVC.textView;
+    UIView *table = fromVC.tableView;
+    UIView *container = [transitionContext containerView];
+    [container insertSubview:toVC.view atIndex:0];
+
+    
+    [UIView animateWithDuration:[self transitionDuration:transitionContext]
+                          delay:0
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         search.frame = CGRectMake(5,-70,search.bounds.size.width,search.bounds.size.height);
+                         table.frame = CGRectMake(5, self.screenRect.size.height, table.frame.size.width, table.frame.size.height);
+                         blackView.alpha = 0;
+                     }
+                     completion:^(BOOL finished) {
+                         [fromVC.view removeFromSuperview];
+                         if ([transitionContext transitionWasCancelled]) {
+                             [transitionContext completeTransition:NO];
+                         } else {
+//                             NSLog(@"post anim subviews: %i",[fromVC.view.subviews count]);
+                             [transitionContext completeTransition:YES];
+
+
+                         }
+                     }];
+    
+    
     
 
 }
@@ -126,9 +211,14 @@
     {
         [self animateTransitionBounceUp:transitionContext];
     }
-    else {
+    else if ([self.action isEqual:@"close"]){
         [self animateTransitionBounceDown:transitionContext];
     }
+    else if ([self.action isEqual:@"add"]){
+        [self animateAddTransition:transitionContext];
+    }
+    else if ([self.action isEqual:@"addRev"])
+        [self animateAddReverseTransition:transitionContext];
 }
 
 # pragma mark - misc old animations

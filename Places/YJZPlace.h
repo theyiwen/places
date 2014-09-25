@@ -13,6 +13,14 @@
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, copy) NSString *notes;
 
+//foursquare properties
+@property (nonatomic, copy) NSString *fsID;
+@property (nonatomic) NSString *streetName;
+@property (nonatomic) NSMutableArray *fsCategories;
+
+//key for image store
+@property (nonatomic, copy) NSString *key;
+
 // Q: is there an enum object?
 @property (nonatomic) int rating;
 
@@ -26,7 +34,11 @@
 
 - (instancetype)initWithName:(NSString *)name;
 
+- (instancetype)initWithFSData:(NSDictionary *)data
+                        rating:(int)rating;
+
 - (NSString *)getTagsAsString;
+- (NSString *)getCatsAsString;
 
 - (void)setTagsWithString:(NSString *)str;
 
