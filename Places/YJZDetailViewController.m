@@ -11,6 +11,7 @@
 #import "YJZPlaceStore.h"
 #import "YJZConstants.h"
 #import "YJZAPIConstants.h"
+#import "YJZImageStore.h"
 
 @interface YJZDetailViewController ()
 
@@ -18,12 +19,6 @@
 @property (weak, nonatomic) IBOutlet UITextField *notesField;
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
 @property (weak, nonatomic) IBOutlet UITextField *tagsField;
-//@property (weak, nonatomic) IBOutlet UISegmentedControl *ratings;
-
-//@property (weak, nonatomic) IBOutlet UIButton *zeroRatingButton;
-//@property (weak, nonatomic) IBOutlet UIButton *oneRatingButton;
-//@property (weak, nonatomic) IBOutlet UIButton *twoRatingButton;
-//@property (weak, nonatomic) IBOutlet UIButton *threeRatingButton;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *rateButtons;
 @property (weak, nonatomic) IBOutlet UIView *containerView;
@@ -111,8 +106,8 @@
     // Do any additional setup after loading the view from its nib.
     self.containerView.layer.cornerRadius = 5;
     self.containerView.layer.masksToBounds = YES;
-    [self fetchImage];
 //    self.containerView.layer.borderWidth = 1.0;
+    
 
 }
 
@@ -122,8 +117,21 @@
     
     self.nameField.text = self.place.name;
     self.notesField.text = self.place.notes;
-    self.tagsField.text = [self.place getCatsAsString];
+    self.tagsField.text = [self.place getCatsAsString
+                           ];
     self.addressLabel.text = self.place.streetName;
+    if ([[YJZImageStore sharedStore] imageForKey:self.place.key])
+    {
+        self.imageView.image = [[YJZImageStore sharedStore] imageForKey:self.place.key];
+        self.imageView.contentMode = UIViewContentModeScaleAspectFill;
+        [self.view setNeedsDisplay];
+        NSLog(@"loaded img");
+    }
+    else{
+        [self fetchImage];
+        NSLog(@"fetched img");
+    }
+    
     for (NSString *s in self.place.tags)
     {
         [self.tagsField.text stringByAppendingString:[NSString stringWithFormat:@"%@, ",s]];
@@ -197,32 +205,34 @@
     }
 }
 
--(void)saveImages
+- (NSURL*)findInstagramImage
 {
-    self.instaURLs = [[NSMutableArray alloc] init];
     for (int i=0; i<[self.photoData count]; i++)
     {
         NSDictionary* photoItem = self.photoData[i];
         if ([photoItem[@"source"][@"name"] isEqualToString:@"Instagram"])
         {
-            [self.instaURLs addObject:[NSString stringWithFormat:@"%@%@x%@%@",
-                                       photoItem[@"prefix"],
-                                       photoItem[@"width"],
-                                       photoItem[@"height"],
-                                       photoItem[@"suffix"]]];
+            NSString *urlStr = [NSString stringWithFormat:@"%@%@x%@%@",
+                                photoItem[@"prefix"],
+                                photoItem[@"width"],
+                                photoItem[@"height"],
+                                photoItem[@"suffix"]];
+            NSURL *imageURL = [NSURL URLWithString:urlStr];
+            return imageURL;
         }
     }
-    [self loadSingleImage];
+    return nil;
 }
 
--(void)loadSingleImage
+-(void)loadAndSaveImage
 {
-    if ([self.instaURLs count] > 0)
+    NSURL *imageURL = [self findInstagramImage];
+    if (imageURL != nil)
     {
-        NSURL *imageURL = [NSURL URLWithString:self.instaURLs[0]];
         NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
         self.imageView.image = [UIImage imageWithData:imageData];
         self.imageView.contentMode = UIViewContentModeScaleAspectFill;
+        [[YJZImageStore sharedStore] setImage:self.imageView.image forKey:self.place.key];
         [self.view setNeedsDisplay];
     }
 }
@@ -250,11 +260,10 @@
                                                                                                       options:0
                                                                                                         error:&err];
                                                     self.photoData = self.dataObject[@"response"][@"photos"][@"items"];
-                                                    NSLog(@"photo data pulled");
                                                     dispatch_async(dispatch_get_main_queue(),^{
                                                         
                                                         //ui updates here
-                                                        [self saveImages];
+                                                        [self loadAndSaveImage];
                                                     }
                                                                    );
                                                     if (self.dataObject == nil)

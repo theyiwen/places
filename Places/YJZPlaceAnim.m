@@ -117,12 +117,12 @@
                          self.blackView.alpha = 0;
                      }
                      completion:^(BOOL finished) {
-
+                         fromVC.view.backgroundColor = [UIColor blackColor];
+                         [self.blackView removeFromSuperview];
                          if ([transitionContext transitionWasCancelled]) {
                              [transitionContext completeTransition:NO];
                          } else {
                              [transitionContext completeTransition:YES];
-                             [self.blackView removeFromSuperview];
                              [fromVC.view removeFromSuperview];
                          }
                      }];
@@ -138,9 +138,8 @@
     toVC.view.backgroundColor = [UIColor clearColor];
     
     UIView *container = [transitionContext containerView];
-    self.blackView.alpha = 0.0;
     UIView *fromSnap = [fromVC.view snapshotViewAfterScreenUpdates:YES];
-        [container addSubview:toVC.view];
+    [container addSubview:toVC.view];
     
 //    //not sure why they don't work here
 //    [toVC.view insertSubview:fromSnap atIndex:0];
@@ -171,7 +170,9 @@
     YJZAddViewController *fromVC = (YJZAddViewController *)[transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
     UIViewController *toVC = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
 
-    UIView *blackView = fromVC.view.subviews[1];
+//    NSLog(@"pre anim subviews: %i",[fromVC.view.subviews count]);
+
+    UIView *blackView = fromVC.overlay;
     
     UIView *search = fromVC.textView;
     UIView *table = fromVC.tableView;
@@ -188,11 +189,14 @@
                          blackView.alpha = 0;
                      }
                      completion:^(BOOL finished) {
-                         
+                         [fromVC.view removeFromSuperview];
                          if ([transitionContext transitionWasCancelled]) {
                              [transitionContext completeTransition:NO];
                          } else {
+//                             NSLog(@"post anim subviews: %i",[fromVC.view.subviews count]);
                              [transitionContext completeTransition:YES];
+
+
                          }
                      }];
     

@@ -12,6 +12,8 @@
 
 @property (weak, nonatomic) IBOutlet UIView *textView;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (nonatomic, strong) UIView *overlay;
+
 
 
 @end

@@ -16,7 +16,6 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loading;
-@property (nonatomic, strong) UIView *overlay;
 
 @property (nonatomic, strong) id dataObject;
 @property (nonatomic, strong) NSMutableArray *venueData;

@@ -21,6 +21,9 @@
         _notes = notes;
         _rating = rating;
         _tags = tags;
+        NSUUID *uuid = [[NSUUID alloc] init];
+        NSString *key = [uuid UUIDString];
+        _key = key;
     }
     return self;
 }
@@ -42,6 +45,10 @@
         _rating = rating;
         for (int i=0; i<[cat count]; i++)
             [self.fsCategories addObject:cat[i][@"name"] ];
+        
+        NSUUID *uuid = [[NSUUID alloc] init];
+        NSString *key = [uuid UUIDString];
+        _key = key;
         return self;
     }
     return nil;
