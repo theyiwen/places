@@ -13,6 +13,7 @@
 #import "YJZConstants.h"
 #import "YJZAppDelegate.h"
 #import "YJZAddViewController.h"
+#import "YJZTableViewCell.h"
 
 @interface YJZPlacesViewController ()
 
@@ -38,9 +39,8 @@
         
         _collapsedSections = [[NSMutableArray alloc] initWithArray:@[@0,@0,@0,@0]];
         
-        self.tableView.rowHeight = (CGFloat)50;
+        self.tableView.rowHeight = (CGFloat)76;
         self.tableView.sectionHeaderHeight = (CGFloat)50;
-        self.tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
         self.navigationItem.title = @"places";
 //        UIBarButtonItem *bbi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewItem:)];
 //        self.navigationItem.rightBarButtonItem = bbi;
@@ -65,9 +65,21 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UITableViewCell" forIndexPath:indexPath];
+    
+    
+    YJZTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"YJZTableViewCell" forIndexPath:indexPath];
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+    
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        cell.preservesSuperviewLayoutMargins = NO;
+        [cell setLayoutMargins:UIEdgeInsetsMake(0, 82, 0, 0)];
+    }
     YJZPlace *place = [[YJZPlaceStore sharedStore] places][indexPath.section][indexPath.row];
-    cell.textLabel.text = place.name;
+    cell.nameLabel.text = place.name;
+    cell.tagsLabel.text = place.getCatsAsString;
+    cell.thumbnailView.image = place.thumbnail;
     return cell;
 }
 
@@ -85,8 +97,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    UINib *nib = [UINib nibWithNibName:@"YJZTableViewCell" bundle:nil];
+    [self.tableView registerNib:nib forCellReuseIdentifier:@"YJZTableViewCell"];
     
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"UITableViewCell"];
+//    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"UITableViewCell"];
 
 }
 
@@ -94,6 +108,13 @@
 {
     [super viewWillAppear:animated];
     [self.tableView reloadData];
+    if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [self.tableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    
+    if ([self.tableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [self.tableView setLayoutMargins:UIEdgeInsetsZero];
+    }
 //    self.navigationController.navigationBarHidden = YES;
 }
 

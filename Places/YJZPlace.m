@@ -77,7 +77,6 @@
     }
 }
 
-
 - (NSString *)getCatsAsString
 {
     int tagLen = (int)[self.fsCategories count];
@@ -123,6 +122,8 @@
     [aCoder encodeObject:self.fsID forKey:@"fsID"];
     [aCoder encodeObject:self.fsCategories forKey:@"fsCategories"];
     [aCoder encodeObject:self.streetName forKey:@"streetName"];
+    [aCoder encodeObject:self.key forKey:@"key"];
+    [aCoder encodeObject:self.thumbnail forKey:@"thumbnail"];
 
 }
 
@@ -137,6 +138,8 @@
         _fsCategories = [aDecoder decodeObjectForKey:@"fsCategories"];
         _fsID = [aDecoder decodeObjectForKey:@"fsID"];
         _streetName = [aDecoder decodeObjectForKey:@"streetName"];
+        _key = [aDecoder decodeObjectForKey:@"key"];
+        _thumbnail = [aDecoder decodeObjectForKey:@"thumbnail"];
 
     }
     return self;

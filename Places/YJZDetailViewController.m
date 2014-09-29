@@ -12,6 +12,7 @@
 #import "YJZConstants.h"
 #import "YJZAPIConstants.h"
 #import "YJZImageStore.h"
+#import "YJZTableViewCell.h"
 
 @interface YJZDetailViewController ()
 
@@ -230,9 +231,12 @@
     if (imageURL != nil)
     {
         NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
-        self.imageView.image = [UIImage imageWithData:imageData];
+        UIImage *img = [UIImage imageWithData:imageData];
+        self.imageView.image = img;
         self.imageView.contentMode = UIViewContentModeScaleAspectFill;
-        [[YJZImageStore sharedStore] setImage:self.imageView.image forKey:self.place.key];
+        [[YJZImageStore sharedStore] setImage:img forKey:self.place.key];
+        self.place.thumbnail = [YJZTableViewCell thumbnailFromImage:img];
+//        [self.place setThumbnailFromImage:img];
         [self.view setNeedsDisplay];
     }
 }

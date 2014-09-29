@@ -18,8 +18,9 @@
 @property (nonatomic) NSString *streetName;
 @property (nonatomic) NSMutableArray *fsCategories;
 
-//key for image store
+//images
 @property (nonatomic, copy) NSString *key;
+@property (nonatomic, strong) UIImage *thumbnail;
 
 // Q: is there an enum object?
 @property (nonatomic) int rating;
