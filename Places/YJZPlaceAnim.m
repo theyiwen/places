@@ -51,7 +51,7 @@
     }
     else if ([self.action isEqual:@"addRev"])
     {
-        return 0.4;
+        return 0;
     }
     return 0;
 }
@@ -169,38 +169,29 @@
 {
     YJZAddViewController *fromVC = (YJZAddViewController *)[transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
     UIViewController *toVC = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
-
-//    NSLog(@"pre anim subviews: %i",[fromVC.view.subviews count]);
-
-    UIView *blackView = fromVC.overlay;
     
-    UIView *search = fromVC.textView;
-    UIView *table = fromVC.tableView;
-    UIView *container = [transitionContext containerView];
-    [container insertSubview:toVC.view atIndex:0];
+    UIView *fromView = [transitionContext viewForKey:UITransitionContextFromViewControllerKey];
+    UIView *toView = [transitionContext viewForKey:UITransitionContextToViewControllerKey];
 
+    
+    UIView *container = [transitionContext containerView];
+    [container addSubview:toVC.view];
+    [container addSubview:fromVC.view];
     
     [UIView animateWithDuration:[self transitionDuration:transitionContext]
                           delay:0
                         options:UIViewAnimationOptionCurveEaseInOut
                      animations:^{
-                         search.frame = CGRectMake(5,-70,search.bounds.size.width,search.bounds.size.height);
-                         table.frame = CGRectMake(5, self.screenRect.size.height, table.frame.size.width, table.frame.size.height);
-                         blackView.alpha = 0;
+
                      }
                      completion:^(BOOL finished) {
-                         [fromVC.view removeFromSuperview];
                          if ([transitionContext transitionWasCancelled]) {
                              [transitionContext completeTransition:NO];
                          } else {
-//                             NSLog(@"post anim subviews: %i",[fromVC.view.subviews count]);
                              [transitionContext completeTransition:YES];
-
-
+                             [fromVC.view removeFromSuperview];
                          }
                      }];
-    
-    
     
 
 }

@@ -8,9 +8,11 @@
 
 #import "YJZAddViewController.h"
 #import "YJZAPIConstants.h"
+#import "YJZConstants.h"
 #import "YJZPlaceStore.h"
 #import "YJZPLace.h"
 #import "YJZDetailViewController.h"
+#import "YJZAddViewCell.h"
 
 @interface YJZAddViewController ()
 
@@ -19,6 +21,8 @@
 
 @property (nonatomic, strong) id dataObject;
 @property (nonatomic, strong) NSMutableArray *venueData;
+
+@property (nonatomic, strong) UIColor *separatorColor;
 
 @end
 
@@ -36,7 +40,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"UITableViewCell"];
     CGRect screen = [[UIScreen mainScreen] bounds];
     self.overlay = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screen.size.width, screen.size.height)];
     self.overlay.backgroundColor = [UIColor blackColor];
@@ -45,11 +48,19 @@
     //table view setup
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    self.tableView.layer.cornerRadius = 5;
-    self.tableView.layer.masksToBounds = YES;
-    self.tableView.hidden = YES;
     self.tableView.rowHeight = (CGFloat)50;
-    self.tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
+//    self.tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
+    if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [self.tableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    
+    if ([self.tableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [self.tableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+    self.separatorColor = self.tableView.separatorColor;
+    self.tableView.separatorColor = [UIColor clearColor];
+    UINib *nib = [UINib nibWithNibName:@"YJZAddViewCell" bundle:nil];
+    [self.tableView registerNib:nib forCellReuseIdentifier:@"YJZAddViewCell"];
     
     //text field setup
     self.textField.delegate = self;
@@ -71,6 +82,7 @@
     
     //pre animated state
     self.overlay.alpha = 0;
+    self.addView.hidden = YES;
     self.textView.hidden = YES;
     
     //putting it here makes keyboard animate at the same time, but sideways
@@ -83,6 +95,11 @@
 
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+//    [self animateOutView];
+    [super viewWillDisappear: animated];
+}
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
@@ -94,7 +111,27 @@
     
 }
 - (IBAction)backgroundTouched:(id)sender {
-    [self.navigationController popViewControllerAnimated:YES];
+    [self animateOutViewPush:false forVC:nil];
+}
+
+-(void)animateOutViewPush:(BOOL)push forVC:(YJZDetailViewController *)dvc {
+    [self.textField resignFirstResponder];
+    [UIView animateWithDuration:0.5
+                          delay:0
+         usingSpringWithDamping:0.8
+          initialSpringVelocity:0.0f
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         self.addView.frame = CGRectMake(5,-350,self.addView.bounds.size.width,self.textView.bounds.size.height);
+                         self.overlay.alpha = 0.0;
+                     } completion:^(BOOL finished) {
+                         if (push) {
+                             [self.navigationController pushViewController:dvc animated:YES];
+                         }
+                         else {
+                             [self.navigationController popViewControllerAnimated:YES];
+                         }
+                     }];
 }
 
 - (void)didReceiveMemoryWarning
@@ -113,39 +150,61 @@
 - (void)animdateInInputView
 {
     self.textView.hidden = NO;
-    self.textView.frame = CGRectMake(5,-70,self.textView.bounds.size.width,self.textView.bounds.size.height);
+    
+    self.addView.frame = CGRectMake(5,-350,self.addView.bounds.size.width,self.textView.bounds.size.height);
+    self.addView.hidden = NO;
 
     [self.textField becomeFirstResponder];
-    [UIView animateWithDuration:0.6
+    [UIView animateWithDuration:0.5
                           delay:0
-         usingSpringWithDamping:0.7
+         usingSpringWithDamping:0.8
           initialSpringVelocity:0.0f
                         options:UIViewAnimationOptionCurveEaseInOut
                      animations:^{
-                         self.textView.frame = CGRectMake(5,30,self.textView.bounds.size.width,self.textView.bounds.size.height);
+                         self.addView.frame = CGRectMake(5,5,self.addView.bounds.size.width,self.textView.bounds.size.height);
                          self.overlay.alpha = 0.7;
                      } completion:^(BOOL finished) {
                          
                      }];
 
 }
-- (void)animateInTableView
+
+- (void)animateOutView
 {
-    [self.loading stopAnimating];
-    self.tableView.hidden = NO;
-    self.tableView.frame = CGRectMake(5, 500, self.tableView.frame.size.width, self.tableView.frame.size.height);
-    
+    NSLog(@"here");
+    [UIView beginAnimations:nil context:nil];
     [UIView animateWithDuration:0.5
                           delay:0
-         usingSpringWithDamping:0.7
+         usingSpringWithDamping:0.8
           initialSpringVelocity:0.0f
                         options:UIViewAnimationOptionCurveEaseInOut
                      animations:^{
-                         self.tableView.frame = CGRectMake(5, 100, self.tableView.frame.size.width, self.tableView.frame.size.height);
+                         self.addView.frame = CGRectMake(5,-330,self.addView.bounds.size.width,self.textView.bounds.size.height);
+                         self.overlay.alpha = 0.0;
                      } completion:^(BOOL finished) {
                          
                      }];
+    [UIView commitAnimations];
+    [self.view setNeedsDisplay];
+    
 }
+//- (void)animateInTableView
+//{
+//    [self.loading stopAnimating];
+//    self.tableView.hidden = NO;
+//    self.tableView.frame = CGRectMake(5, 500, self.tableView.frame.size.width, self.tableView.frame.size.height);
+//    
+//    [UIView animateWithDuration:0.5
+//                          delay:0
+//         usingSpringWithDamping:0.7
+//          initialSpringVelocity:0.0f
+//                        options:UIViewAnimationOptionCurveEaseInOut
+//                     animations:^{
+//                         self.tableView.frame = CGRectMake(5, 100, self.tableView.frame.size.width, self.tableView.frame.size.height);
+//                     } completion:^(BOOL finished) {
+//                         
+//                     }];
+//}
 
 #pragma mark - Table view data source
 
@@ -154,6 +213,36 @@
     // Return the number of sections.
     return 1;
 }
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 25.0;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+        // 1. The view for the header
+        UIView* headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 25.0)];
+    
+        // 2. Set a custom background color and a border
+        headerView.backgroundColor = BLUE_COLOR;
+    
+        // 3. Add a label
+        UILabel* headerLabel = [[UILabel alloc] init];
+        headerLabel.frame = CGRectMake(10, 2, tableView.frame.size.width - 10, 21);
+        headerLabel.backgroundColor = [UIColor clearColor];
+        headerLabel.textColor = [UIColor whiteColor];
+        headerLabel.font = [UIFont boldSystemFontOfSize:12.0];
+        headerLabel.text = @"RESULTS";
+        headerLabel.textAlignment = NSTextAlignmentLeft;
+    
+        // 4. Add the label to the header view
+        [headerView addSubview:headerLabel];
+        
+        // 5. Finally return
+        return headerView;
+}
+
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -187,10 +276,14 @@
                                                     NSLog(@"data dump done");
                                                     
                                                     dispatch_async(dispatch_get_main_queue(),^{
-                                                        
+                                                        [self.loading stopAnimating];
+                                                        self.tableView.separatorColor = self.separatorColor;
                                                         [self.tableView reloadData];
                                                         if (self.tableView.hidden == YES)
-                                                            [self animateInTableView];
+                                                        {
+                                                            self.tableView.hidden = NO;
+                                                        }
+//                                                            [self animateInTableView];
                                                     }
                                                                    );
                                                     if (self.dataObject == nil)
@@ -202,10 +295,23 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UITableViewCell" forIndexPath:indexPath];
+    YJZAddViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"YJZAddViewCell" forIndexPath:indexPath];
     
     // Configure the cell...
-    cell.textLabel.text = self.venueData[indexPath.row][@"name"];
+    cell.nameLabel.text = self.venueData[indexPath.row][@"name"];
+    cell.subLabel.text = self.venueData[indexPath.row][@"location"][@"address"];
+    
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+    
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        cell.preservesSuperviewLayoutMargins = NO;
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+
+    }
+    
+    
     return cell;
 }
 
@@ -214,7 +320,8 @@
     YJZPlace *newPlace = [[YJZPlace alloc] initWithFSData:self.venueData[indexPath.row] rating:0];
     [[YJZPlaceStore sharedStore] addPlace:newPlace];
     YJZDetailViewController *dvc = [[YJZDetailViewController alloc] initWithPlace:newPlace];
-    [self.navigationController pushViewController:dvc animated:YES];
+    [self animateOutViewPush:true forVC:dvc];
+//    [self.navigationController pushViewController:dvc animated:YES];
 }
 
 @end

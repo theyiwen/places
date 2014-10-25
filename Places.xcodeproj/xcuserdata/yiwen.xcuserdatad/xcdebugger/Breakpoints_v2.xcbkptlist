@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Places/YJZPlacesViewController.m"
-            timestampString = "427942047.123326"
+            timestampString = "433716489.801266"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "185"
-            endingLineNumber = "185"
+            startingLineNumber = "206"
+            endingLineNumber = "206"
             landmarkName = "-sectionButtonTouchUpInside:"
             landmarkType = "5">
          </BreakpointContent>
