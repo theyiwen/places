@@ -17,6 +17,8 @@
 @property (nonatomic, copy) NSString *fsID;
 @property (nonatomic) NSString *streetName;
 @property (nonatomic) NSMutableArray *fsCategories;
+@property (nonatomic) double longitude;
+@property (nonatomic) double latitude;
 
 //images
 @property (nonatomic, copy) NSString *key;

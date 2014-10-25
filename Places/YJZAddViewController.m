@@ -318,6 +318,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     YJZPlace *newPlace = [[YJZPlace alloc] initWithFSData:self.venueData[indexPath.row] rating:0];
+    NSLog(@"%f, %f",newPlace.latitude,newPlace.longitude);
     [[YJZPlaceStore sharedStore] addPlace:newPlace];
     YJZDetailViewController *dvc = [[YJZDetailViewController alloc] initWithPlace:newPlace];
     [self animateOutViewPush:true forVC:dvc];

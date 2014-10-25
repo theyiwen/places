@@ -12,6 +12,7 @@
 #import "YJZPlaceStore.h"
 #import "YJZPlaceAnim.h"
 #import "YJZNavViewController.h"
+#import "YJZMapViewController.h"
 
 
 
@@ -24,10 +25,17 @@
     
     // controller set up
 
+
     
     YJZPlacesViewController *pvc = [[YJZPlacesViewController alloc] init];
     YJZNavViewController *navController = [[YJZNavViewController alloc] initWithRootViewController:pvc];
-    self.window.rootViewController = navController;
+    
+    YJZMapViewController *mvc = [[YJZMapViewController alloc] init];
+    
+    UITabBarController *tvc = [[UITabBarController alloc] init];
+    tvc.viewControllers = @[navController, mvc];
+    
+    self.window.rootViewController = tvc;
     self.window.backgroundColor = [UIColor whiteColor];
     
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];

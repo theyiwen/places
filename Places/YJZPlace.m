@@ -40,9 +40,14 @@
         _fsID = data[@"id"];
         _name = data[@"name"];
         _streetName = data[@"location"][@"address"];
+        _longitude = [data[@"location"][@"lng"] floatValue];
+        _latitude = [data[@"location"][@"lat"] floatValue];
+        
+        _rating = rating;
+
+        
         NSArray *cat = data[@"categories"];
         _fsCategories = [[NSMutableArray alloc] init];
-        _rating = rating;
         for (int i=0; i<[cat count]; i++)
             [self.fsCategories addObject:cat[i][@"name"] ];
         
@@ -124,6 +129,8 @@
     [aCoder encodeObject:self.streetName forKey:@"streetName"];
     [aCoder encodeObject:self.key forKey:@"key"];
     [aCoder encodeObject:self.thumbnail forKey:@"thumbnail"];
+    [aCoder encodeDouble:self.latitude forKey:@"latitude"];
+    [aCoder encodeDouble:self.longitude forKey:@"longitude"];
 
 }
 
@@ -140,6 +147,8 @@
         _streetName = [aDecoder decodeObjectForKey:@"streetName"];
         _key = [aDecoder decodeObjectForKey:@"key"];
         _thumbnail = [aDecoder decodeObjectForKey:@"thumbnail"];
+        _latitude = [aDecoder decodeDoubleForKey:@"latitude"];
+        _longitude = [aDecoder decodeDoubleForKey:@"longitude"];
 
     }
     return self;

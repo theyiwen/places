@@ -27,6 +27,7 @@
         // Custom initialization
         self.delegate = self;
         self.navigationBarHidden = YES;
+        self.tabBarItem.title = @"Places";
     }
     return self;
 }
