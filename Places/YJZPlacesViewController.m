@@ -216,7 +216,6 @@
 {
     YJZPlace *selectedPlace = [[YJZPlaceStore sharedStore] places][indexPath.section][indexPath.row];
     YJZDetailViewController *dvc = [[YJZDetailViewController alloc] initWithPlace:selectedPlace];
-//    dvc.place = selectedPlace;
     [self.navigationController pushViewController:dvc animated:YES];
 }
 

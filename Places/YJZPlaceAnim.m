@@ -8,6 +8,7 @@
 
 #import "YJZPlaceAnim.h"
 #import "YJZAddViewController.h"
+#import "YJZPlacesViewController.h"
 
 
 @interface YJZPlaceAnim() <UIViewControllerAnimatedTransitioning>
@@ -94,7 +95,7 @@
 
 - (void)animateTransitionBounceDown:(id<UIViewControllerContextTransitioning>)transitionContext
 {
-    UIViewController *toVC = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+    YJZPlacesViewController *toVC = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
     UIViewController *fromVC = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
     
     //before
@@ -124,6 +125,8 @@
                          } else {
                              [transitionContext completeTransition:YES];
                              [fromVC.view removeFromSuperview];
+                             [toVC.navigationController.tabBarController.tabBar setHidden:NO];
+
                          }
                      }];
     

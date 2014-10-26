@@ -13,6 +13,7 @@
 #import "YJZPlaceAnim.h"
 #import "YJZNavViewController.h"
 #import "YJZMapViewController.h"
+#import "YJZConstants.h"
 
 
 
@@ -25,16 +26,21 @@
     
     // controller set up
 
-
+    YJZMapViewController *mvc = [[YJZMapViewController alloc] init];
+    YJZNavViewController *nav0 = [[YJZNavViewController alloc] initWithRootViewController:mvc];
+    nav0.tabBarItem.title = @"search";
+    nav0.tabBarItem.image = [UIImage imageNamed:@"search.png"];
     
     YJZPlacesViewController *pvc = [[YJZPlacesViewController alloc] init];
-    YJZNavViewController *navController = [[YJZNavViewController alloc] initWithRootViewController:pvc];
-    
-    YJZMapViewController *mvc = [[YJZMapViewController alloc] init];
+    YJZNavViewController *nav1 = [[YJZNavViewController alloc] initWithRootViewController:pvc];
+    nav1.tabBarItem.title = @"try";
+    nav1.tabBarItem.image = [UIImage imageNamed:@"bookmark.png"];
+
     
     UITabBarController *tvc = [[UITabBarController alloc] init];
-    tvc.viewControllers = @[navController, mvc];
-    
+    tvc.viewControllers = @[nav0, nav1];
+    tvc.tabBar.barTintColor = [UIColor whiteColor];
+    tvc.tabBar.tintColor = BLUE_COLOR;
     self.window.rootViewController = tvc;
     self.window.backgroundColor = [UIColor whiteColor];
     

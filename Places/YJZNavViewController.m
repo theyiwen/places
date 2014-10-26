@@ -27,7 +27,6 @@
         // Custom initialization
         self.delegate = self;
         self.navigationBarHidden = YES;
-        self.tabBarItem.title = @"Places";
     }
     return self;
 }
@@ -71,6 +70,24 @@
         return anim;
     }
     return nil;
+}
+
+-(void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    [super pushViewController:viewController animated:animated];
+    [self.tabBarController.tabBar setHidden:YES];
+}
+
+- (UIViewController *)popViewControllerAnimated:(BOOL)animated
+{
+    [self.tabBarController.tabBar setHidden:NO];
+    return [super popViewControllerAnimated:animated];
+}
+
+- (NSArray *)popToRootViewControllerAnimated:(BOOL)animated
+{
+//    [self.tabBarController.tabBar setHidden:NO];
+    return [super popToRootViewControllerAnimated:animated];
 }
 
 - (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated

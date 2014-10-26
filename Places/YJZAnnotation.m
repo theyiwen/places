@@ -11,10 +11,11 @@
 
 @implementation YJZAnnotation
 
--(id) initWithTitle:(NSString *)title AndCoordinate:(CLLocationCoordinate2D)coordinate
+-(id) initWithTitle:(NSString *) title Coordinate:(CLLocationCoordinate2D)coordinate andPlace: (YJZPlace *)place
 {
     self.title = title;
     self.coordinate = coordinate;
+    self.place = place;
     return self;
 }
 

@@ -52,6 +52,7 @@
             self.interactive = NO;
             if (self.panPercent > 0.25) {
                 [self finishInteractiveTransition];
+//                [self.navController.tabBarController.tabBar setHidden:NO];
             } else {
                 [self cancelInteractiveTransition];
             }

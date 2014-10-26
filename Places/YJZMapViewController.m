@@ -10,6 +10,7 @@
 #import "YJZAnnotation.h"
 #import "YJZPlaceStore.h"
 #import "YJZPlace.h"
+#import "YJZDetailViewController.h"
 
 @import CoreLocation;
 
@@ -41,21 +42,30 @@
     }
     _mapView.showsUserLocation = YES;
     
-    
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
     // start off by default in San Francisco
     MKCoordinateRegion newRegion;
     newRegion.center.latitude = 37.786996;
     newRegion.center.longitude = -122.440100;
     newRegion.span.latitudeDelta = 0.020;
     newRegion.span.longitudeDelta = 0.020;
+   
+    CLLocationCoordinate2D coord;
+    coord.latitude = 37.786996;
+    coord.longitude = -122.440100;
+    YJZAnnotation *placeAnnot = [[YJZAnnotation alloc] initWithTitle:@"default" Coordinate:coord andPlace:nil];
+    [self.mapView addAnnotations:@[placeAnnot]];
     
+    [self.mapView setUserTrackingMode:MKUserTrackingModeFollow];
+    NSLog(@"Set to default");
+
     [self.mapView setRegion:newRegion animated:YES];
     [self.mapView addAnnotations:[self realLocations]];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+
 
 }
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
@@ -64,6 +74,7 @@
     {
         self.mapView.centerCoordinate = userLocation.location.coordinate;
         self.didZoom = true;
+        NSLog(@"Set to user");
     }
 }
 
@@ -79,11 +90,24 @@
             YJZPlace *place = [[YJZPlaceStore sharedStore] places][i][j];
             coord.latitude = place.latitude;
             coord.longitude = place.longitude;
-            YJZAnnotation *placeAnnot = [[YJZAnnotation alloc] initWithTitle:place.name AndCoordinate:coord];
+            YJZAnnotation *placeAnnot = [[YJZAnnotation alloc] initWithTitle:place.name Coordinate:coord andPlace:place];
             [annot addObject:placeAnnot];
         }
     }
     return annot;
+}
+
+- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
+{
+    NSLog(@"Tapped");
+    id <MKAnnotation> annotation = [view annotation];
+    if ([annotation isKindOfClass:[YJZAnnotation class]])
+    {
+        YJZDetailViewController *dvc = [[YJZDetailViewController alloc] initWithPlace:((YJZAnnotation *) annotation).place];
+        [self.navigationController pushViewController:dvc animated:YES];
+    }
+
+
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
@@ -101,6 +125,9 @@
                                         reuseIdentifier:NSStringFromClass([YJZAnnotation class])];
         returnedAnnotationView.canShowCallout = YES;
         returnedAnnotationView.image = [UIImage imageNamed:@"pin.png"];
+        UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+        [rightButton addTarget:nil action:nil forControlEvents:UIControlEventTouchUpInside];
+        returnedAnnotationView.rightCalloutAccessoryView = rightButton;
     }
     
     return returnedAnnotationView;
