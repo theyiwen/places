@@ -16,7 +16,8 @@
 
 @interface YJZDetailViewController ()
 
-@property (weak, nonatomic) IBOutlet UITextField *nameField;
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+//@property (weak, nonatomic) IBOutlet UITextField *nameField;
 @property (weak, nonatomic) IBOutlet UITextField *notesField;
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
 @property (weak, nonatomic) IBOutlet UITextField *tagsField;
@@ -26,6 +27,13 @@
 
 @property (nonatomic) NSArray *ratingColors;
 @property (nonatomic) NSDictionary *rateDict;
+
+@property (weak, nonatomic) IBOutlet UIButton *tryButton;
+@property (weak, nonatomic) IBOutlet UIButton *heartButton;
+@property (weak, nonatomic) IBOutlet UIButton *checkButton;
+@property (strong, nonatomic) NSArray *buttons;
+@property (strong, nonatomic) NSArray *activeButtonImages;
+@property (strong, nonatomic) NSArray *inactiveButtonImages;
 
 @property (nonatomic, strong) id dataObject;
 @property (nonatomic, strong) NSMutableArray *photoData;
@@ -53,6 +61,12 @@
                           YELLOW_COLOR];
         
         _rateDict = @{@"try":@0,@"love":@1,@"like":@2,@"okay":@3};
+        self.activeButtonImages = @[[UIImage imageNamed:@"try_full.png"],
+                                    [UIImage imageNamed:@"heart_full.png"],
+                                    [UIImage imageNamed:@"check_full.png"]];
+        self.inactiveButtonImages = @[[UIImage imageNamed:@"try_empty.png"],
+                                      [UIImage imageNamed:@"heart_empty.png"],
+                                      [UIImage imageNamed:@"check_empty.png"]];
 
     }
     return self;
@@ -76,10 +90,11 @@
 
 - (void)saveTextFieldContent:(UITextField *)textField
 {
-    if ([textField isEqual:self.nameField])
-    {
-        self.place.name = self.nameField.text;
-    } else if ([textField isEqual:self.notesField]){
+//    if ([textField isEqual:self.nameField])
+//    {
+//        self.place.name = self.nameField.text;
+//    } else
+    if ([textField isEqual:self.notesField]){
         self.place.notes = self.notesField.text;
     } else if ([textField isEqual:self.tagsField]) {
         [self.place setTagsWithString:self.tagsField.text];
@@ -116,7 +131,8 @@
 {
     [super viewWillAppear:animated];
     
-    self.nameField.text = self.place.name;
+    self.nameLabel.text = self.place.name;
+//    self.nameField.text = self.place.name;
     self.notesField.text = self.place.notes;
     self.tagsField.text = [self.place getCatsAsString
                            ];
@@ -125,6 +141,7 @@
     {
         self.imageView.image = [[YJZImageStore sharedStore] imageForKey:self.place.key];
         self.imageView.contentMode = UIViewContentModeScaleAspectFill;
+        [self.imageView setClipsToBounds:YES];
         [self.view setNeedsDisplay];
         NSLog(@"loaded img");
     }
@@ -139,6 +156,8 @@
     }
 //    self.ratingField.text = [NSString stringWithFormat:@"%i",self.place.rating];
 //    self.ratings.selectedSegmentIndex = self.place.rating;
+
+    self.buttons = @[self.tryButton,self.heartButton,self.checkButton];
 
     [self updateButtonStyles:self.place.rating];
 
@@ -165,45 +184,53 @@
 
 
 - (IBAction)setRatingToOne:(id)sender {
-//    self.ratingField.text = @"1";
     [self updateButtonStyles:1];
     [[YJZPlaceStore sharedStore] updateRating:1 forPlace:self.place];
 
 }
 - (IBAction)setRatingToZero:(id)sender {
-//    self.ratingField.text = @"0";
     [self updateButtonStyles:0];
     [[YJZPlaceStore sharedStore] updateRating:0 forPlace:self.place];
 }
 - (IBAction)setRatingToTwo:(id)sender {
-//    self.ratingField.text = @"2";
     [self updateButtonStyles:2];
     [[YJZPlaceStore sharedStore] updateRating:2 forPlace:self.place];
 
 
 }
 - (IBAction)setRatingToThree:(id)sender {
-//    self.ratingField.text = @"3";
     [self updateButtonStyles:3];
     [[YJZPlaceStore sharedStore] updateRating:3 forPlace:self.place];
 }
 
 - (void)updateButtonStyles:(int)selectedRating {
 
-    
-    for (int i=0; i<[self.rateButtons count]; i++)
+    for (int i=0; i<3; i++)
     {
-        UIButton *button = self.rateButtons[i];
-        int currentRating = (int)[self.rateDict[button.currentTitle] integerValue];
+        UIButton *button = self.buttons[i];
         
-        if (currentRating != selectedRating) {
-            [button setTitleColor:[[UIColor lightGrayColor] colorWithAlphaComponent:0.7] forState:UIControlStateNormal];
+        if (i != selectedRating) {
+            [button setImage:self.inactiveButtonImages[i] forState:UIControlStateNormal];
         }
         else {
-            [button setTitleColor:self.ratingColors[selectedRating] forState:UIControlStateNormal];
+            [button setImage:self.activeButtonImages[i] forState:UIControlStateNormal];
         }
-
+        
     }
+//    
+//    for (int i=0; i<[self.rateButtons count]; i++)
+//    {
+//        UIButton *button = self.rateButtons[i];
+//        int currentRating = (int)[self.rateDict[button.currentTitle] integerValue];
+//        
+//        if (currentRating != selectedRating) {
+//            [button setTitleColor:[[UIColor lightGrayColor] colorWithAlphaComponent:0.7] forState:UIControlStateNormal];
+//        }
+//        else {
+//            [button setTitleColor:self.ratingColors[selectedRating] forState:UIControlStateNormal];
+//        }
+//
+//    }
 }
 
 - (NSURL*)findInstagramImage
@@ -234,6 +261,7 @@
         UIImage *img = [UIImage imageWithData:imageData];
         self.imageView.image = img;
         self.imageView.contentMode = UIViewContentModeScaleAspectFill;
+        [self.imageView setClipsToBounds:YES];
         [[YJZImageStore sharedStore] setImage:img forKey:self.place.key];
         self.place.thumbnail = [YJZTableViewCell thumbnailFromImage:img];
 //        [self.place setThumbnailFromImage:img];

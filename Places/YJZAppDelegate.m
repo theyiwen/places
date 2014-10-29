@@ -14,7 +14,7 @@
 #import "YJZNavViewController.h"
 #import "YJZMapViewController.h"
 #import "YJZConstants.h"
-
+#import <Parse/Parse.h>
 
 
 @implementation YJZAppDelegate
@@ -23,6 +23,14 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
+    
+    // parse
+    [Parse setApplicationId:@"oEC7Sry7T869bZMRP3x8V4NFyvPJyWt6xcgtzHOq"
+                  clientKey:@"SGDsSVQn6rE32dugDz2iPovl7IpaiETmml8sbVNN"];
+    
+    PFObject *testObject = [PFObject objectWithClassName:@"TestObject"];
+    testObject[@"foo"] = @"bar";
+    [testObject saveInBackground];
     
     // controller set up
 
