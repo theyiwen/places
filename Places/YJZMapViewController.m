@@ -11,6 +11,7 @@
 #import "YJZPlaceStore.h"
 #import "YJZPlace.h"
 #import "YJZDetailViewController.h"
+#import "YJZConstants.h"
 
 @import CoreLocation;
 
@@ -65,6 +66,11 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self.navigationController.navigationBar setTranslucent:NO];
+    [self.navigationController.navigationBar setBarTintColor:ORANGE_COLOR];
+    [self.navigationController.navigationBar
+     setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    self.navigationItem.title = @"search";
 
 
 }

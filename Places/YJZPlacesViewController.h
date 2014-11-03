@@ -10,6 +10,7 @@
 
 @interface YJZPlacesViewController : UITableViewController <UITableViewDelegate>
 
-@property (nonatomic,readonly) UIColor *accentColor;
+@property (nonatomic) int listIndex;
+- (instancetype)initWithListIndex:(int)listIndex;
 
 @end

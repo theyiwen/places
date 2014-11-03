@@ -73,6 +73,7 @@
     [container addSubview:fromVC.view];
     [container addSubview:self.blackView];
     [container addSubview:toVC.view];
+    toVC.navigationController.navigationBarHidden = YES;
 
     
     [UIView animateWithDuration:[self transitionDuration:transitionContext]
@@ -126,6 +127,7 @@
                              [transitionContext completeTransition:YES];
                              [fromVC.view removeFromSuperview];
                              [toVC.navigationController.tabBarController.tabBar setHidden:NO];
+                             toVC.navigationController.navigationBarHidden = NO;
 
                          }
                      }];
@@ -139,6 +141,8 @@
     UIViewController *fromVC = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
 
     toVC.view.backgroundColor = [UIColor clearColor];
+    toVC.navigationController.navigationBarHidden = YES;
+
     
     UIView *container = [transitionContext containerView];
     UIView *fromSnap = [fromVC.view snapshotViewAfterScreenUpdates:YES];

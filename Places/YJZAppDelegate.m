@@ -39,14 +39,24 @@
     nav0.tabBarItem.title = @"search";
     nav0.tabBarItem.image = [UIImage imageNamed:@"search.png"];
     
-    YJZPlacesViewController *pvc = [[YJZPlacesViewController alloc] init];
+    YJZPlacesViewController *pvc = [[YJZPlacesViewController alloc] initWithListIndex:0];
     YJZNavViewController *nav1 = [[YJZNavViewController alloc] initWithRootViewController:pvc];
     nav1.tabBarItem.title = @"try";
     nav1.tabBarItem.image = [UIImage imageNamed:@"bookmark.png"];
+    
+    YJZPlacesViewController *lvc = [[YJZPlacesViewController alloc] initWithListIndex:1];
+    YJZNavViewController *nav2 = [[YJZNavViewController alloc] initWithRootViewController:lvc];
+    nav2.tabBarItem.title = @"love";
+    nav2.tabBarItem.image = [UIImage imageNamed:@"heart.png"];
+    
+    YJZPlacesViewController *cvc = [[YJZPlacesViewController alloc] initWithListIndex:2];
+    YJZNavViewController *nav3 = [[YJZNavViewController alloc] initWithRootViewController:cvc];
+    nav3.tabBarItem.title = @"been";
+    nav3.tabBarItem.image = [UIImage imageNamed:@"check.png"];
 
     
     UITabBarController *tvc = [[UITabBarController alloc] init];
-    tvc.viewControllers = @[nav0, nav1];
+    tvc.viewControllers = @[nav0, nav1, nav2, nav3];
     tvc.tabBar.barTintColor = [UIColor whiteColor];
     tvc.tabBar.tintColor = BLUE_COLOR;
     self.window.rootViewController = tvc;

@@ -26,7 +26,7 @@
     if (self) {
         // Custom initialization
         self.delegate = self;
-        self.navigationBarHidden = YES;
+//        self.navigationBarHidden = YES;
     }
     return self;
 }
